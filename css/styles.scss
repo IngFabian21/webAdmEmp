@@ -1,0 +1,18 @@
+$mainColor: #e67e22;
+$secondaryColor: #c84c1a;
+$fondoColor: #f8f5f0;
+$tarjetaColor: #ffffff;
+$mainText: #ffffff;
+#navbarStyles {
+  background-color: $mainColor;
+}
+
+.textMain{
+    color: $mainText;
+}
+#mainContainer {
+    padding-left: 0%;
+}
+#dropdownUser{
+    background-color: $mainColor;
+}

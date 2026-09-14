@@ -1,0 +1,35 @@
+{
+  "name": "webadmemp",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/IngFabian21/webAdmEmp#readme",
+  "bugs": {
+    "url": "https://github.com/IngFabian21/webAdmEmp/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IngFabian21/webAdmEmp.git"
+  },
+  "license": "ISC",
+  "author": "Fabian Rodirguez",
+  "type": "commonjs",
+  "main": "dashboard.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "lite-server"
+  },
+  "devDependencies": {
+    "grunt": "^1.6.3",
+    "grunt-browser-sync": "^2.2.0",
+    "grunt-contrib-sass": "^2.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-sass": "^4.1.0",
+    "lite-server": "^2.6.1",
+    "sass": "^1.104.1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "jquery": "^4.0.0",
+    "popper.js": "^1.16.1"
+  }
+}
