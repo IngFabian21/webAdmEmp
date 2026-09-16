@@ -37,6 +37,7 @@ body{
 }
 a{
     text-decoration-color: $secondaryText ;
+    color: $secondaryText;
 }
 .textMain{
     color: $mainText;
@@ -58,8 +59,15 @@ a{
     background-color: $secondaryColor;
     border-style: hidden;
 }
+.btnGeneric{
+    background-color: $secondaryColor;
+    border-style: hidden;
+}
 .backgroundGen{
     background-color: $tarjetaColor;
     border-style: hidden;
+}
+.date{
+    width: 50%;
 }
 

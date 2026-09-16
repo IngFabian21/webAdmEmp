@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +11,19 @@
     <link rel="stylesheet" href="./css/styles.css">
     <!-- endbuild -->
 </head>
+
 <body>
     <!-- build:js js/main.js -->
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="./chart.js"></script><!-- los datos de este script deben llenarse con los datos de la base de datos segun el año sel-->
     <!-- endbuild -->
-    <div class="container-fluid navbarStyles" >
+    <div class="container-fluid navbarStyles">
         <div class="row">
             <div class="col">
                 <a href="#" class="navbar-brand textMain fw-semibold">
-                    <img src="./img/logo.png" alt="logo" width="60" height="60" class="d-inline-block align-text-center">
+                    <img src="./img/logo.png" alt="logo" width="60" height="60"
+                        class="d-inline-block align-text-center">
                     Pedidos
                 </a>
             </div>
@@ -26,17 +31,48 @@
                 <button class="btn btn-secondary textMain fw-semibold" type="button" data-bs-toggle="collapse"
                     data-bs-target="#barMenu" aria-expanded="false" aria-controls="barMenu" id="btnGeneric">
                     <i class="bi bi-list"></i> Menú
+                </button>  
+            </div>
+            <div class="col d-flex justify-content-end align-items-center navbarStyles">
+                <button class="btn btn-secondary textMain fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#modalAddPedido" id="btnGeneric">
+                    <i class="bi bi-plus-square"></i> Nuevo pedido
                 </button>
+                <div class="modal fade" id="modalAddPedido" tabindex="-1" aria-labelledby="modalAddPedido" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="modalAddPedido"> Agregar pedido</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body"><!-- Esto debe manejar autentificacion para realizar el cmabio-->
+                                <form action="">
+                                    <div class="form-group">
+                                        <label for="cont-antg" class="col-form-label textSecondary fw-semibold">Contraseña actual:</label>
+                                        <input type="password" class="form-control" id="cont-antg">
+                                        <label for="cont-nuev" class="col-form-label textSecondary fw-semibold"> Nueva contraseña:</label>
+                                        <input type="password" class="form-control" id="cont-nuev">
+                                        <label for="r-cont-nueva" class="col-form-label textSecondary fw-semibold">Repetir nueva contraseña:</label>
+                                        <input type="password" class="form-control" id="r-cont-nueva">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-success textMain btnGeneric" type="button">Cambiar</button>
+                                <button class="btn btn-outline-dark">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="container-fluid containerP ">
         <div class="row">
-            <div class="col-sm-1 navbarStyles" id="barMenu" >
+            <div class="col-sm-1 navbarStyles" id="barMenu">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link active textMain fw-semibold" aria-current="page" href="#">
-                            <i class="bi bi-boxes"></i> Pedidos 
+                            <i class="bi bi-boxes"></i> Pedidos
                         </a>
                     </li>
                     <li class="nav-item">
@@ -50,7 +86,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link textMain fw-semibold" href="#" >
+                        <a class="nav-link textMain fw-semibold" href="#">
                             <i class="bi bi-basket2-fill"></i> Inventario
                         </a>
                     </li>
@@ -69,37 +105,173 @@
             <div class="col">
                 <ul class="nav nav-tabs nav-tabs-g" id="tabClientes" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link nav-link-g active " id="consultar-tab" data-bs-toggle="tab" data-bs-target="#consultar-tab-pane"
-                            type="button" role="tab" aria-controls="consultar-tab-pane" aria-selected="true">Consultar</button>
+                        <button class="nav-link nav-link-g active " id="consultar-tab" data-bs-toggle="tab"
+                            data-bs-target="#consultar-tab-pane" type="button" role="tab"
+                            aria-controls="consultar-tab-pane" aria-selected="true">Consultar</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link nav-link-g" id="estadisticas-tab" data-bs-toggle="tab"
-                            data-bs-target="#estadisticas-tab-pane" type="button" role="tab" aria-controls="estadisticas-tab-pane"
-                            aria-selected="false">Estadisticas</button>
+                            data-bs-target="#estadisticas-tab-pane" type="button" role="tab"
+                            aria-controls="estadisticas-tab-pane" aria-selected="false">Estadisticas</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link nav-link-g" id="imprimir-tab" data-bs-toggle="tab" data-bs-target="#imprimir-tab-pane"
-                            type="button" role="tab" aria-controls="imprimir-tab-pane" aria-selected="false">Imprimir</button>
+                        <button class="nav-link nav-link-g" id="imprimir-tab" data-bs-toggle="tab"
+                            data-bs-target="#imprimir-tab-pane" type="button" role="tab"
+                            aria-controls="imprimir-tab-pane" aria-selected="true">Imprimir</button>
                     </li>
                 </ul>
                 <div class="tab-content p-4 border border-top-0 rounded-bottom " id="tabClientesContent">
-                    <div class="tab-pane fade show active" id="consultar-tab-pane" role="tabpanel" aria-labelledby="consultar-tab" tabindex="0">
-                        dsfgsdfds
+                    <div class="tab-pane fade show active" id="consultar-tab-pane" role="tabpanel"
+                        aria-labelledby="consultar-tab" tabindex="0"><!-- Deben extraerse datos para llenar los clientes del select-->
+                        <nav class="row">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <input type="date" class="form-control textSecondary fw-semibold" id="fecha">
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="" id="" class="form-select textSecondary fw-semibold">
+                                        <option value="0" class="textSecondary fw-semibold">Todos los clientes</option>
+                                        <option value="1" class="textSecondary fw-semibold"> cliente 1</option>
+                                        <option value="2" class="textSecondary fw-semibold"> Cliente 2</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-5">
+                                    <form class="d-flex" role="search">
+                                        <input class="form-control me-2 textSecondary fw-semibold" type="search"
+                                            placeholder="Buscar cliente o referencia">
+                                        <button class="btn  btn-secondary textMain btnGeneric "
+                                            type="submit">Buscar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="container-fluid">
+                            <hr>
+                            <div class="row">
+                                <table class="table"><!-- Deben extraerse datos para llenar esta tabla-->
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"> Fecha</th>
+                                            <th scope="col"> Cliente</th>
+                                            <th scope="col"> Referencia</th>
+                                            <th scope="col"> Total</th>
+                                            <th scope="col"><i class="bi bi-gear"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">10-12-2023</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">Cliente 1</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">
+                                                    <a href="" data-bs-toggle="modal"
+                                                        data-bs-target="#modalMostrarPedido">3 refs</a>
+                                                </h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">$20.000</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">
+                                                    <a href=""><i class="bi bi-pencil-square"></i></a>
+                                                    <a href=""><i class="bi bi-trash"></i></a>
+                                                </h6>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="modal fade" id="modalMostrarPedido" tabindex="-1"
+                                    aria-labelledby="modalMostrarPedido" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="modalMostrarPedido"> Referencias</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Esto debe mostrar la cantidad y referencia del pedido fecha cliente-->
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Refencia</th>
+                                                            <th>Cantidad</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Referencia 1</td>
+                                                            <td>2</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Referencia 3</td>
+                                                            <td>4</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tab-pane fade" id="estadisticas-tab-pane" role="tabpanel" aria-labelledby="estadisticas-tab" tabindex="0">
-                        asfasfasf
+                    <div class="tab-pane fade " id="estadisticas-tab-pane" role="tabpanel"
+                        aria-labelledby="estadisticas-tab" tabindex="0">
+                        <div id="chart"></div>
+                        <hr>
+                        <div class="col-sm-3">
+                            <select name="" id="" class="form-select textSecondary fw-semibold"><!--Debe extraerse los años de pedidos guardados segun la DB-->
+                                <option value="0" class="textSecondary fw-semibold">2026</option>
+                                <option value="1" class="textSecondary fw-semibold">2025</option>
+                                <option value="2" class="textSecondary fw-semibold">2024</option>
+                            </select>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <table class="table"><!--Debe llenarse la tabla con datos de la DB cantidad de pedidos echos por un cliente en cada mes-->
+                                <thead>
+                                    <tr>
+                                        <th>Mes</th>
+                                        <th>CLiente 1</th>
+                                        <th>Cliente 2</th>
+                                        <th>Cliente 3</th>
+                                        <th>Cliente 4</th>
+                                        <th>Cliente 5</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Enero</td>
+                                        <td>44</td>
+                                        <td>53</td>
+                                        <td>12</td>
+                                        <td>9</td>
+                                        <td>25</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="tab-pane fade " id="imprimir-tab-pane" role="tabpanel" aria-labelledby="imprimir-tab" tabindex="0">
-                        saffassssss
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control textSecondary fw-semibold" id="fecha">
+                        </div>
+                        <hr>
+                        <embed src="./pedidos/16-09-2026.pdf" type="application/pdf" width="100%" height="600px" /><!--Este archivo debe generarse apartir de la base datos-->
                     </div>
+
                 </div>
-                
+
             </div>
-            
+
         </div>
-        
-    </div>
-    
+
 
 </body>
+
 </html>

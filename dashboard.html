@@ -31,7 +31,7 @@
             <div class="col d-flex justify-content-end align-items-center navbarStyles">
                 <!-- Apartado para configurar datos del usuario cuando se haga conexion con BD -->
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle textMain fw-semibold" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="btnGeneric">
+                    <button class="btn btn-secondary textMain fw-semibold" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btnGeneric">
                         <i class="bi bi-person-badge"> Usuario</i>
                     </button>
                     <ul class="dropdown-menu" id="dropdownUser">
@@ -52,20 +52,20 @@
                                 <h1 class="modal-title fs-5" id="modalCambioConstraseña"> Cambiar Contraseña</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body"><!-- Esto debe manejar autentificacion para realizar el cmabio-->
                                 <form action="">
                                     <div class="form-group">
-                                        <label for="cont-antg" class="col-form-label">Contraseña actual:</label>
+                                        <label for="cont-antg" class="col-form-label textSecondary fw-semibold">Contraseña actual:</label>
                                         <input type="password" class="form-control" id="cont-antg">
-                                        <label for="cont-nuev" class="col-form-label"> Nueva contraseña:</label>
+                                        <label for="cont-nuev" class="col-form-label textSecondary fw-semibold"> Nueva contraseña:</label>
                                         <input type="password" class="form-control" id="cont-nuev">
-                                        <label for="r-cont-nueva" class="col-form-label">Repetir nueva contraseña:</label>
+                                        <label for="r-cont-nueva" class="col-form-label textSecondary fw-semibold">Repetir nueva contraseña:</label>
                                         <input type="password" class="form-control" id="r-cont-nueva">
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-success" type="button">Cambiar</button>
+                                <button class="btn btn-success textMain btnGeneric" type="button">Cambiar</button>
                                 <button class="btn btn-outline-dark">Cancelar</button>
                             </div>
                         </div>

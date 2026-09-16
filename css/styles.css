@@ -34,6 +34,7 @@ body {
 
 a {
   text-decoration-color: #2E4D3E;
+  color: #2E4D3E;
 }
 
 .textMain {
@@ -62,8 +63,17 @@ a {
   border-style: hidden;
 }
 
+.btnGeneric {
+  background-color: #E8973A;
+  border-style: hidden;
+}
+
 .backgroundGen {
   background-color: #F4E4C7;
   border-style: hidden;
+}
+
+.date {
+  width: 50%;
 }
 /*# sourceMappingURL=styles.css.map */
