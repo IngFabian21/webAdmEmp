@@ -1,16 +1,69 @@
-#navbarStyles {
-  background-color: #e67e22;
+body {
+  background-color: #FBF6EC;
+}
+
+.nav-tabs-g {
+  border-bottom: 1px solid #E8D9BE;
+}
+
+.nav-tabs-g .nav-link-g {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: #2E4D3E;
+  font-weight: 500;
+  padding: 0.65rem 1rem;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.navbarStyles {
+  background-color: #B8471F;
+}
+
+.nav-tabs-g .nav-link-g:hover {
+  color: #B8471F;
+  border-color: transparent;
+}
+
+.nav-tabs-g .nav-link-g.active {
+  background: transparent;
+  color: #B8471F;
+  border-bottom: 2px solid #B8471F;
+}
+
+a {
+  text-decoration-color: #2E4D3E;
 }
 
 .textMain {
-  color: #ffffff;
+  color: #FBF6EC;
 }
 
-#mainContainer {
-  padding-left: 0%;
+.textSecondary {
+  color: #2E4D3E;
+}
+
+.paddingCard {
+  padding: 10px;
+  padding-right: 10px;
 }
 
 #dropdownUser {
-  background-color: #e67e22;
+  background-color: #E8973A;
+}
+
+#cardDashboard {
+  background-color: #F4E4C7;
+}
+
+#btnGeneric {
+  background-color: #E8973A;
+  border-style: hidden;
+}
+
+.backgroundGen {
+  background-color: #F4E4C7;
+  border-style: hidden;
 }
 /*# sourceMappingURL=styles.css.map */

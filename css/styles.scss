@@ -1,18 +1,65 @@
-$mainColor: #e67e22;
-$secondaryColor: #c84c1a;
+$mainColor: #B8471F;
+$secondaryColor: #E8973A;
+$tarjetaColor: #F4E4C7;
 $fondoColor: #f8f5f0;
-$tarjetaColor: #ffffff;
-$mainText: #ffffff;
-#navbarStyles {
+$tarjetaColor: #F4E4C7;
+$mainText: #FBF6EC;
+$secondaryText: #2E4D3E;
+$navTabsColor: #E8D9BE;
+
+body{
+    background-color: $mainText;
+}
+.nav-tabs-g {
+    border-bottom: 1px solid $navTabsColor ;
+}
+.nav-tabs-g .nav-link-g {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: $secondaryText;
+    font-weight: 500;
+    padding: 0.65rem 1rem;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+}
+.navbarStyles {
   background-color: $mainColor;
 }
-
+.nav-tabs-g .nav-link-g:hover {
+    color: $mainColor;
+    border-color: transparent;
+}
+.nav-tabs-g .nav-link-g.active {
+    background: transparent;
+    color:  $mainColor;
+    border-bottom: 2px solid $mainColor;
+}
+a{
+    text-decoration-color: $secondaryText ;
+}
 .textMain{
     color: $mainText;
 }
-#mainContainer {
-    padding-left: 0%;
+.textSecondary{
+    color: $secondaryText;
+}
+.paddingCard {
+    padding: 10px;
+    padding-right: 10px;
 }
 #dropdownUser{
-    background-color: $mainColor;
+    background-color: $secondaryColor;
 }
+#cardDashboard{
+    background-color: $tarjetaColor;
+}
+#btnGeneric{
+    background-color: $secondaryColor;
+    border-style: hidden;
+}
+.backgroundGen{
+    background-color: $tarjetaColor;
+    border-style: hidden;
+}
+
