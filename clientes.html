@@ -25,7 +25,7 @@
                 <a href="#" class="navbar-brand textMain fw-semibold">
                     <img src="./img/logo.png" alt="logo" width="60" height="60"
                         class="d-inline-block align-text-center">
-                    Pedidos
+                    Clientes
                 </a>
             </div>
             <div class="col d-flex justify-content-end align-items-center">
@@ -36,15 +36,15 @@
             </div>
             <div class="col d-flex justify-content-end align-items-center navbarStyles">
                 <button class="btn btn-secondary textMain fw-semibold" type="button" data-bs-toggle="modal"
-                    data-bs-target="#modalAddPedido" id="btnGeneric">
-                    <i class="bi bi-plus-square"></i> Nuevo pedido
+                    data-bs-target="#modalAddCliente" id="btnGeneric">
+                    <i class="bi bi-plus-square"></i> Cliente
                 </button>
-                <div class="modal fade" id="modalAddPedido" tabindex="-1" aria-labelledby="modalAddPedido"
+                <div class="modal fade" id="modalAddCliente" tabindex="-1" aria-labelledby="modalAddCliente"
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modalAddPedido"> Agregar pedido</h1>
+                                <h1 class="modal-title fs-5" id="modalAddCliente"> Agregar cliente</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -54,16 +54,8 @@
                                         <div class="row p-3">
                                             <div class="col">
                                                 <label for=""
-                                                    class="form-label textSecondary fw-semibold">Cliente</label>
-                                                <select class="form-select" name="" id="nCliente"
-                                                    aria-label="Seleccione un cliente">
-                                                    <option class="textSecondary fw-semibold" value="0">Cliente 1
-                                                    </option>
-                                                    <option class="textSecondary fw-semibold" value="1">Cliente 2
-                                                    </option>
-                                                    <option class="textSecondary fw-semibold" value="2">Cliente 3
-                                                    </option>
-                                                </select>
+                                                    class="form-label textSecondary fw-semibold">Nombre Cliente</label>
+                                                <input type="text" class="form-label">
                                             </div>
                                             <div class="col">
                                                 <label for="" class="form-label textSecondary fw-semibold">Fecha</label>
@@ -137,12 +129,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active textMain fw-semibold" href="#" aria-current="page">
+                        <a class="nav-link  textMain fw-semibold" href="./pedidos.html" >
                             <i class="bi bi-box2-heart"></i> Pedidos
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link textMain fw-semibold" href="./clientes.html">
+                        <a class="nav-link active textMain fw-semibold" href="#" aria-current="page">
                             <i class="bi bi-people"> Clientes</i>
                         </a>
                     </li>
