@@ -25,7 +25,7 @@
                 <a href="#" class="navbar-brand textMain fw-semibold">
                     <img src="./img/logo.png" alt="logo" width="60" height="60"
                         class="d-inline-block align-text-center">
-                    Clientes
+                    Inventario
                 </a>
             </div>
             <div class="col d-flex justify-content-end align-items-center">
@@ -36,15 +36,15 @@
             </div>
             <div class="col d-flex justify-content-end align-items-center navbarStyles">
                 <button class="btn btn-secondary textMain fw-semibold" type="button" data-bs-toggle="modal"
-                    data-bs-target="#modalAddCliente" id="btnGeneric">
-                    <i class="bi bi-plus-square"></i> Cliente
+                    data-bs-target="#modalAddReMov" id="btnGeneric">
+                    <i class="bi bi-plus-square"></i> Registrar movimiento
                 </button>
-                <div class="modal fade" id="modalAddCliente" tabindex="-1" aria-labelledby="modalAddCliente"
+                <div class="modal fade" id="modalAddReMov" tabindex="-1" aria-labelledby="modalAddReMov"
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modalAddCliente"> Nuevo cliente</h1>
+                                <h1 class="modal-title fs-5" id="modalAddReMov"> Registrar movimiento</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -53,19 +53,21 @@
                                 <form action="">
                                     <div class="form-group">
                                         <div class="row p-3">
-                                            <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Nombre
-                                                    cliente</label>
-                                                <input type="text" class="form-control w-75">
+                                            <div class="col text-center">
+                                                <input type="radio" class="btn-check " name="options-base" id="ReMovEntrada" autocomplete="off" checked>
+                                                <label for="ReMovEntrada" class="btn w-25 btn-outline-warning textSecondary fw-semibold"> Entrada</label>
+                                                <input type="radio" class="btn-check textMain " name="options-base" id="ReMovSalida" autocomplete="off">
+                                                <label for="ReMovSalida" class="btn w-25 btn-outline-danger textSecondary fw-semibold"> Salida</label>
                                             </div>
-
-                                            
                                         </div>
                                         <div class="row p-3">
                                             <div class="col">
                                                 <label for=""
-                                                    class="form-label textSecondary fw-semibold">Celular</label>
-                                                <input type="text" class="form-control w-75" id="">
+                                                    class="form-label textSecondary fw-semibold">Producto</label>
+                                                <select name="" id="" class="form-select">
+                                                    <option value="0"> Product</option>
+                                                    <option value="1"> Product 2</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row p-3">
@@ -78,7 +80,7 @@
                                 </form>                     
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Guardar cliente</button>
+                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Agregar cliente</button>
                                 <button class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
@@ -102,12 +104,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active textMain fw-semibold" href="#" aria-current="page">
+                        <a class="nav-link textMain fw-semibold" href="./clientes.html" aria-current="page">
                             <i class="bi bi-people"> Clientes</i>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link textMain fw-semibold" href="./inventario.html">
+                        <a class="nav-link active textMain fw-semibold" href="#">
                             <i class="bi bi-basket2-fill"></i> Inventario
                         </a>
                     </li>

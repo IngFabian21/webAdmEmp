@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       colors: ["#fff"],
     },
     title: {
-      text: "Pedidos mensuales por cliente",
+      text: "Ventas mensuales por cliente",
     },
     xaxis: {
       categories: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio"],
@@ -69,6 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  var chart = new ApexCharts(document.querySelector("#estClientes"), options);
   chart.render();
 });

@@ -16,7 +16,7 @@
     <!-- build:js js/main.js -->
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
-    <script src="./chart.js"></script>
+    <script src="./javasScript/pedidos.js"></script>
     <!-- los datos de este script deben llenarse con los datos de la base de datos segun el año sel-->
     <!-- endbuild -->
     <div class="container-fluid navbarStyles">
@@ -72,7 +72,7 @@
                                             </div>
                                             <div class="row p-3">
                                                 <div class="col">
-                                                    <button class="btn btn-success textMain btnGeneric" type="button">
+                                                    <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">
                                                         confirmar </button>
                                                 </div>
                                             </div>
@@ -111,15 +111,15 @@
                                         </div>
                                         <div class="row p-3">
                                             <div class="col">
-                                                <button class="btn btn-success textMain btnGeneric" type="button"> <i class="bi bi-cart-plus-fill"></i> Agregar referencia </button>
+                                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button"> <i class="bi bi-cart-plus-fill"></i> Agregar referencia </button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-success textMain btnGeneric" type="button">Confirmar Pedido</button>
-                                <button class="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Confirmar Pedido</button>
+                                <button class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link textMain fw-semibold" href="#">
+                        <a class="nav-link textMain fw-semibold" href="./inventario.html">
                             <i class="bi bi-basket2-fill"></i> Inventario
                         </a>
                     </li>
@@ -180,6 +180,11 @@
                             data-bs-target="#imprimir-tab-pane" type="button" role="tab"
                             aria-controls="imprimir-tab-pane" aria-selected="true">Imprimir</button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link nav-link-g" id="referencias-tab" data-bs-toggle="tab"
+                            data-bs-target="#referencias-tab-pane" type="button" role="tab"
+                            aria-controls="referencias-tab-pane" aria-selected="true">Referencias</button>
+                    </li>
                 </ul>
                 <div class="tab-content p-4 border border-top-0 rounded-bottom " id="tabClientesContent">
                     <div class="tab-pane fade show active" id="consultar-tab-pane" role="tabpanel"
@@ -201,7 +206,7 @@
                                     <form class="d-flex" role="search">
                                         <input class="form-control me-2 textSecondary fw-semibold" type="search"
                                             placeholder="Buscar cliente o referencia">
-                                        <button class="btn  btn-secondary textMain btnGeneric "
+                                        <button class="btn  btn-secondary textMain fw-semibold btnGeneric "
                                             type="submit">Buscar</button>
                                     </form>
                                 </div>
@@ -284,7 +289,7 @@
                     </div>
                     <div class="tab-pane fade " id="estadisticas-tab-pane" role="tabpanel"
                         aria-labelledby="estadisticas-tab" tabindex="0">
-                        <div id="chart"></div>
+                        <div id="estPedidos"></div>
                         <hr>
                         <div class="col-sm-3">
                             <select name="" id=""
@@ -301,11 +306,11 @@
                                 <thead>
                                     <tr>
                                         <th>Mes</th>
-                                        <th>CLiente 1</th>
-                                        <th>Cliente 2</th>
-                                        <th>Cliente 3</th>
-                                        <th>Cliente 4</th>
-                                        <th>Cliente 5</th>
+                                        <th>Ref 1</th>
+                                        <th>Ref 2</th>
+                                        <th>Ref 3</th>
+                                        <th>Ref 4</th>
+                                        <th>Ref 5</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -324,12 +329,91 @@
                     <div class="tab-pane fade " id="imprimir-tab-pane" role="tabpanel" aria-labelledby="imprimir-tab"
                         tabindex="0">
                         <div class="col-sm-3">
-                            <label for="" class="form-label">Generar lista de pedidos</label>
+                            <label for="" class="form-label textSecondary fw-semibold">Generar lista de pedidos</label>
                             <input type="date" class="form-control textSecondary fw-semibold" id="fecha">
                         </div>
                         <hr>
                         <embed src="./pedidos/16-09-2026.pdf" type="application/pdf" width="100%"
                             height="600px" /><!--Este archivo debe generarse apartir de la base datos-->
+                    </div>
+                    <div class="tab-pane fade " id="referencias-tab-pane" role="tabpanel" aria-labelledby="referencias-tab" tabindex="0">
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-secondary textMain fw-semibold" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#modalAddRef" id="btnGeneric">
+                                    <i class="bi bi-plus-square"></i> Agregar referencia
+                                </button>
+                                <div class="modal fade" id="modalAddRef" tabindex="-1" aria-labelledby="modalAddRef" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="modalAddRef"> Nueva referencia</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Todo el modal debe trabajar con la base de datos -->
+                                                <form action="">
+                                                    <div class="form-group">
+                                                        <div class="row p-2">
+                                                            <div class="col">
+                                                                <label for="" class="form-label textSecondary fw-semibold">Nombre de la
+                                                                    referencia</label>
+                                                                <input type="text" class="form-control w-75">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row p-2">
+                                                            <div class="col">
+                                                                <label for="" class="form-label textSecondary fw-semibold">Precio</label>
+                                                                <input type="number" class="form-control w-75" id="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Guardar
+                                                    referenica</button>
+                                                <button class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10">
+                                <input type="search" class="form-control textSecondary fw-semibold" placeholder="Buscar Referencia">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table"><!-- Deben extraerse datos para llenar esta tabla-->
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> Nombre de la referencia</th>
+                                        <th scope="col"> Precio</th>
+                                        <th scope="col"> Estado</th>
+                                        <th scope="col"><i class="bi bi-gear"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">Ref 1</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">5000</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">Activo</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">
+                                                <a href=""><i class="bi bi-pencil-square"></i></a>
+                                                <a href=""><i class="bi bi-trash"></i></a>
+                                            </h6>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
