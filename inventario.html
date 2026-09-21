@@ -54,34 +54,48 @@
                                     <div class="form-group">
                                         <div class="row p-3">
                                             <div class="col text-center">
-                                                <input type="radio" class="btn-check " name="options-base" id="ReMovEntrada" autocomplete="off" checked>
-                                                <label for="ReMovEntrada" class="btn w-25 btn-outline-warning textSecondary fw-semibold"> Entrada</label>
-                                                <input type="radio" class="btn-check textMain " name="options-base" id="ReMovSalida" autocomplete="off">
-                                                <label for="ReMovSalida" class="btn w-25 btn-outline-danger textSecondary fw-semibold"> Salida</label>
+                                                <input type="radio" class="btn-check " name="options-base"
+                                                    id="ReMovEntrada" autocomplete="off" checked>
+                                                <label for="ReMovEntrada"
+                                                    class="btn w-25 btn-outline-warning textSecondary fw-semibold">
+                                                    Entrada</label>
+                                                <input type="radio" class="btn-check textMain " name="options-base"
+                                                    id="ReMovSalida" autocomplete="off">
+                                                <label for="ReMovSalida"
+                                                    class="btn w-25 btn-outline-danger textSecondary fw-semibold">
+                                                    Salida</label>
                                             </div>
                                         </div>
                                         <div class="row p-3">
                                             <div class="col">
                                                 <label for=""
                                                     class="form-label textSecondary fw-semibold">Producto</label>
-                                                <select name="" id="" class="form-select">
-                                                    <option value="0"> Product</option>
+                                                <select name="" id="" class="form-select textSecondary fw-semibold">
+                                                    <option value="0"> Product 1</option>
                                                     <option value="1"> Product 2</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="row p-3">
                                             <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Direccion</label>
-                                                <input type="text" class="form-control w-75" id="">
+                                                <label for="" class="form-label textSecondary fw-semibold">Fecha</label>
+                                                <input type="date" class="form-control textSecondary fw-semibold"
+                                                    id="fecha">
+                                            </div>
+                                            <div class="col">
+                                                <label for="" class="form-label textSecondary fw-semibold">
+                                                    Cantidad</label>
+                                                <input type="number" class="form-control textSecondary fw-semibold">
                                             </div>
                                         </div>
                                     </div>
-                                </form>                     
+                                </form>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Agregar cliente</button>
-                                <button class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Guardar
+                                    movimiento</button>
+                                <button class="btn btn-outline-dark fw-semibold"
+                                    data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
                     </div>
@@ -133,24 +147,93 @@
                             aria-controls="consultar-tab-pane" aria-selected="true">Consultar</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link nav-link-g" id="estadisticas-tab" data-bs-toggle="tab"
-                            data-bs-target="#estadisticas-tab-pane" type="button" role="tab"
-                            aria-controls="estadisticas-tab-pane" aria-selected="false">Estadisticas</button>
+                        <button class="nav-link nav-link-g" id="movimientos-tab" data-bs-toggle="tab"
+                            data-bs-target="#movimientos-tab-pane" type="button" role="tab"
+                            aria-controls="movimientos-tab-pane" aria-selected="false">Movimientos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link nav-link-g" id="invMens-tab" data-bs-toggle="tab"
+                            data-bs-target="#invMens-tab-pane" type="button" role="tab"
+                            aria-controls="invMens-tab-pane" aria-selected="false">Inventario Mensual</button>
                     </li>
                 </ul>
                 <div class="tab-content p-4 border border-top-0 rounded-bottom " id="tabClientesContent">
                     <div class="tab-pane fade show active" id="consultar-tab-pane" role="tabpanel"
                         aria-labelledby="consultar-tab" tabindex="0">
-                        <!-- Deben extraerse datos para llenar los clientes del select-->
                         <nav class="row">
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <form class="d-flex" role="search">
-                                        <input class="form-control me-2 textSecondary fw-semibold" type="search"
-                                            placeholder="Buscar por nombre">
-                                        <button class="btn  btn-secondary textMain btnGeneric "
-                                            type="submit">Buscar</button>
-                                    </form>
+                            <div class="col">
+                                <button class="btn btn-secondary textMain fw-semibold" type="button"
+                                    data-bs-toggle="modal" data-bs-target="#modalAddRef" id="btnGeneric">
+                                    <i class="bi bi-plus-square"></i> Agregar producto
+                                </button>
+                                <div class="modal fade" id="modalAddRef" tabindex="-1" aria-labelledby="modalAddRef"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="modalAddRef"> Nuevo producto</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Todo el modal debe trabajar con la base de datos antes de agregar la referencia debe confirmar el cliente -->
+                                                <form action="">
+                                                    <div class="form-group">
+                                                        <div class="row p-3">
+                                                            <div class="col">
+                                                                <label for=""
+                                                                    class="form-label textSecondary fw-semibold">Nombre
+                                                                    del producto</label>
+                                                                <input type="text"
+                                                                    class="form-control textSecondary fw-semibold">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row p-3">
+                                                            <div class="col">
+                                                                <!-- Deben extraerse las unidade de la BD -->
+                                                                <label for="unidadMedidad"
+                                                                    class="form-label textSecondary fw-semibold">Unidad
+                                                                    de medidia</label>
+                                                                <select name="unidadMedidad" id="unidadMedidad"
+                                                                    class="form-select">
+                                                                    <option value="1" class="textSecondary fw-semibold">
+                                                                        Metro(m)</option>
+                                                                    <option value="2" class="textSecondary fw-semibold">
+                                                                        Kilogramo(Kg)</option>
+                                                                    <option value="3" class="textSecondary fw-semibold">
+                                                                        libra(lb)</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col">
+                                                                <label for=""
+                                                                    class="form-label textSecondary fw-semibold">Precio
+                                                                    unitario</label>
+                                                                <input type="number"
+                                                                    class="form-control textSecondary fw-semibold">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row p-3">
+                                                            <div class="col">
+                                                                <label for=""
+                                                                    class="form-label textSecondary fw-semibold">Existencia
+                                                                    incial</label>
+                                                                <input type="number"
+                                                                    class="form-control textSecondary fw-semibold"
+                                                                    id="fecha">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-success textMain fw-semibold btnGeneric"
+                                                    type="button">Guardar
+                                                    movimiento</button>
+                                                <button class="btn btn-outline-dark fw-semibold"
+                                                    data-bs-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </nav>
@@ -160,32 +243,29 @@
                                 <table class="table"><!-- Deben extraerse datos para llenar esta tabla-->
                                     <thead>
                                         <tr>
-                                            <th scope="col"> Nombre</th>
-                                            <th scope="col"> Celular</th>
-                                            <th scope="col"> Direccion</th>
-                                            <th scope="col"> Estado</th>
-                                            <th scope="col"><i class="bi bi-gear"></i></th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Unidad</th>
+                                            <th scope="col">Ultima entrada</th>
+                                            <th scope="col">Existenica actual</th>
+                                            <th scope="col">Nivel</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <h6 class="textSecondary fw-semibold">Cliente 1</h6>
+                                                <h6 class="textSecondary fw-semibold">Prod 1</h6>
                                             </td>
                                             <td>
-                                                <h6 class="textSecondary fw-semibold">Cel 1</h6>
+                                                <h6 class="textSecondary fw-semibold">Kg</h6>
                                             </td>
                                             <td>
-                                                <h6 class="textSecondary fw-semibold">Calle 123</h6>
+                                                <h6 class="textSecondary fw-semibold">70</h6>
                                             </td>
                                             <td>
-                                                <h6 class="textSecondary fw-semibold">Activo</h6>
+                                                <h6 class="textSecondary fw-semibold">200</h6>
                                             </td>
                                             <td>
-                                                <h6 class="textSecondary fw-semibold">
-                                                    <a href=""><i class="bi bi-pencil-square"></i></a>
-                                                    <a href=""><i class="bi bi-trash"></i></a>
-                                                </h6>
+                                                <h6 class="textSecondary fw-semibold">Bajo 30%</h6>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -193,17 +273,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade " id="estadisticas-tab-pane" role="tabpanel"
-                        aria-labelledby="estadisticas-tab" tabindex="0">
-                        <div id="estClientes"></div>
-                        <hr>
-                        <div class="col-sm-3">
-                            <select name="" id=""
-                                class="form-select textSecondary fw-semibold"><!--Debe extraerse los años de pedidos guardados segun la DB-->
-                                <option value="0" class="textSecondary fw-semibold">2026</option>
-                                <option value="1" class="textSecondary fw-semibold">2025</option>
-                                <option value="2" class="textSecondary fw-semibold">2024</option>
-                            </select>
+                    <div class="tab-pane fade " id="movimientos-tab-pane" role="tabpanel"
+                        aria-labelledby="movimientos-tab" tabindex="0">
+                        <div class="row">
+                            <div class="col-3">
+                                <input type="date" class="form-control textSecondary fw-semibold">
+                            </div>
+                            <div class="col-3">
+                                <select name="" id="" class="form-select textSecondary fw-semibold">
+                                    <!--Debe extraerse los productos de la DB-->
+                                    <option value="0" class="textSecondary fw-semibold">Todos los productos</option>
+                                    <option value="1" class="textSecondary fw-semibold">Prod 1</option>
+                                    <option value="2" class="textSecondary fw-semibold">Prod 2</option>
+                                </select>
+                            </div>
                         </div>
                         <hr>
                         <div class="row">
@@ -211,22 +294,78 @@
                                 <!--Debe llenarse la tabla con datos de la DB cantidad de pedidos echos por un cliente en cada mes-->
                                 <thead>
                                     <tr>
-                                        <th>Mes</th>
-                                        <th>CLiente 1</th>
-                                        <th>Cliente 2</th>
-                                        <th>Cliente 3</th>
-                                        <th>Cliente 4</th>
-                                        <th>Cliente 5</th>
+                                        <th>Fecha</th>
+                                        <th>Producto</th>
+                                        <th>Entrada</th>
+                                        <th>Salida</th>
+                                        <th>Saldo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Enero</td>
-                                        <td>44</td>
-                                        <td>53</td>
-                                        <td>12</td>
-                                        <td>9</td>
-                                        <td>25</td>
+                                        <td><h6 class="textSecondary fw-semibold">16-09-2026</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">Prod 1</h6></td>
+                                        <td><h6 class="text-success fw-semibold">---</h6></td>
+                                        <td><h6 class="text-danger fw-semibold">40</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">126</h6></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h6 class="textSecondary fw-semibold">16-09-2026</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">Prod 2</h6></td>
+                                        <td><h6 class="text-success fw-semibold">30</h6></td>
+                                        <td><h6 class="text-danger fw-semibold">---</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">200</h6></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade " id="invMens-tab-pane" role="tabpanel"
+                        aria-labelledby="invMens-tab" tabindex="0">
+                        <div class="row">
+                            <div class="col-3">
+                                <select name="" id="" class="form-select textSecondary fw-semibold">
+                                    <!--Debe extraerse los productos de la DB-->
+                                    <option value="0" class="textSecondary fw-semibold">Agosto 2026</option>
+                                    <option value="1" class="textSecondary fw-semibold">Julio 2026</option>
+                                    <option value="2" class="textSecondary fw-semibold">Junio 2026</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-secondary textMain fw-semibold btnGeneric"><i class="bi bi-printer-fill"></i> Imprimir</button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <table class="table">
+                                <!--Debe llenarse la tabla con datos de la DB-->
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio unitario</th>
+                                        <th>Valor total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><h6 class="textSecondary fw-semibold">Prod 1</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">128 lb</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">18.500</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">2.368.000</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold"></h6></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h6 class="textSecondary fw-semibold">Prod 2</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">10 kg</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">8.500</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">2.008.000</h6></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h6 class="textSecondary fw-semibold">Valor total del inventario</h6></td>
+                                        <td><h6 class="textSecondary fw-semibold"></h6></td>
+                                        <td><h6 class="textSecondary fw-semibold"></h6></td>
+                                        <td><h6 class="textSecondary fw-semibold">4.008.000</h6></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -235,6 +374,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>
