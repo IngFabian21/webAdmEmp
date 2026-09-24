@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adm La fabrica de la empanada</title>
+    <!-- build:css css/main.css -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <!-- endbuild -->
+</head>
+
+<body>
+    <!-- build:js js/main.js -->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="./javasScript/economia.js"></script>
+    <!-- los datos de este script deben llenarse con los datos de la base de datos segun el año sel-->
+    <!-- endbuild -->
+    <div class="container-fluid navbarStyles">
+        <div class="row">
+            <div class="col">
+                <a href="#" class="navbar-brand textMain fw-semibold">
+                    <img src="./img/logo.png" alt="logo" width="60" height="60"
+                        class="d-inline-block align-text-center">
+                    Economía
+                </a>
+            </div>
+            <div class="col d-flex justify-content-end align-items-center">
+                <button class="btn btn-secondary textMain fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#barMenu" aria-expanded="false" aria-controls="barMenu" id="btnGeneric">
+                    <i class="bi bi-list"></i> Menú
+                </button>
+            </div>
+            <div class="col d-flex justify-content-end align-items-center navbarStyles">
+                <button class="btn btn-secondary textMain fw-semibold" type="button" data-bs-toggle="modal"
+                    data-bs-target="#modalAddReMovEc" id="btnGeneric">
+                    <i class="bi bi-plus-square"></i> Registrar movimiento
+                </button>
+                <div class="modal fade" id="modalAddReMovEc" tabindex="-1" aria-labelledby="modalAddReMovEc" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="modalAddReMovEc"> Registrar movimiento</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Todo el modal debe trabajar con la base de datos antes de agregar la referencia debe confirmar el cliente -->
+                                <form action="">
+                                    <div class="form-group">
+                                        <div class="row p-3">
+                                            <div class="col text-center">
+                                                <input type="radio" class="btn-check " name="options-base" id="ReMovEntrada"
+                                                    autocomplete="off" checked>
+                                                <label for="ReMovEntrada"
+                                                    class="btn w-25 btn-outline-warning textSecondary fw-semibold">
+                                                    Entrada</label>
+                                                <input type="radio" class="btn-check textMain " name="options-base" id="ReMovSalida"
+                                                    autocomplete="off">
+                                                <label for="ReMovSalida"
+                                                    class="btn w-25 btn-outline-danger textSecondary fw-semibold">
+                                                    Salida</label>
+                                            </div>
+                                        </div>
+                                        <div class="row p-3">
+                                            <div class="col">
+                                                <label for="" class="form-label textSecondary fw-semibold">Concepto</label>
+                                                <select name="" id="" class="form-select textSecondary fw-semibold">
+                                                    <option value="0"> Concept 1</option>
+                                                    <option value="1"> Concept 2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row p-3">
+                                            <div class="col">
+                                                <label for="" class="form-label textSecondary fw-semibold">Fecha</label>
+                                                <input type="date" class="form-control textSecondary fw-semibold" id="fecha">
+                                            </div>
+                                            <div class="col">
+                                                <label for="" class="form-label textSecondary fw-semibold">
+                                                    Valor</label>
+                                                <input type="number" class="form-control textSecondary fw-semibold">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Guardar
+                                    movimiento</button>
+                                <button class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid containerP ">
+        <div class="row">
+            <div class="col-sm-1 navbarStyles" id="barMenu">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link  textMain fw-semibold" href="./dashboard.html">
+                            <i class="bi bi-boxes"></i> Resumen
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link  textMain fw-semibold" href="./pedidos.html">
+                            <i class="bi bi-box2-heart"></i> Pedidos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link textMain fw-semibold" href="./clientes.html" aria-current="page">
+                            <i class="bi bi-people"> Clientes</i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link textMain fw-semibold" href="./inventario.html">
+                            <i class="bi bi-basket2-fill"></i> Inventario
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link textMain fw-semibold" href="./cobranza.html">
+                            <i class="bi bi-cash-stack"></i> Cobranza
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active textMain fw-semibold" href="#">
+                            <i class="bi bi-cash-coin"></i> Economia
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-11">
+                <ul class="nav nav-tabs nav-tabs-g" id="tabEconomia" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link nav-link-g active" id="movimientosEc-tab" data-bs-toggle="tab"
+                            data-bs-target="#movimientosEc-tab-pane" type="button" role="tab"
+                            aria-controls="movimientosEc-tab-pane" aria-selected="true">Movimientos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link nav-link-g" id="estadisticasEc-tab" data-bs-toggle="tab"
+                            data-bs-target="#estadisticasEc-tab-pane" type="button" role="tab"
+                            aria-controls="estadisticasEc-tab-pane" aria-selected="false">Estadisticas</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link nav-link-g" id="regConcepto-tab" data-bs-toggle="tab"
+                            data-bs-target="#regConcepto-tab-pane" type="button" role="tab"
+                            aria-controls="regConcepto-tab-pane" aria-selected="false">Registro de conceptos</button>
+                    </li>
+                </ul>
+                <div class="tab-content p-4 border border-top-0 rounded-bottom " id="tabEconomiaContent">
+                    <div class="tab-pane fade show active" id="movimientosEc-tab-pane" role="tabpanel"
+                        aria-labelledby="movimientosEc-tab" tabindex="0">
+                        <div class="row">
+                            <div class="col paddingCard">
+                                <div class="card fw-semibold text-center " id="cardDashboard">
+                                    <div class="card-header ">
+                                        Ingresos del mes
+                                    </div>
+                                    <div class="card-body">
+                                        <h2 class="textSecondary fw-semibold">$18.2M</h2> <!-- Estos datos se extraen de la BD -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col paddingCard">
+                                <div class="card fw-semibold text-center " id="cardDashboard">
+                                    <div class="card-header ">
+                                        Gastos del mes
+                                    </div>
+                                    <div class="card-body">
+                                        <h2 class="textSecondary fw-semibold">$42.3M</h2> <!-- Estos datos se extraen de la BD -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Concepto</th>
+                                            <th>Tipo</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">16-09-2026</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">Concepto 1</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="text-success fw-semibold">Entrada</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">$2.000.000</h6>
+                                            </td>
+                                        </tr>  
+                                        <tr>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">10-09-2026</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">Concepto 4</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="text-danger fw-semibold">Salida</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">$1.000.000</h6>
+                                            </td>
+                                        </tr>   
+                                        <tr>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">09-09-2026</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">Concepto 8</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="text-danger fw-semibold">Salida</h6>
+                                            </td>
+                                            <td>
+                                                <h6 class="textSecondary fw-semibold">$500.000</h6>
+                                            </td>
+                                        </tr>          
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade " id="estadisticasEc-tab-pane" role="tabpanel" aria-labelledby="estadisticasEc-tab"
+                        tabindex="0">
+                        <div class="row">
+                            <div class="col">
+                                <label for="" class="form-label textSecondary fw-semibold">Año:</label>
+                                <select name="" id="" class="form-select textSecondary fw-semibold">
+                                    <option value="0" class="textSecondary fw-semibold">2023</option>
+                                    <option value="0" class="textSecondary fw-semibold">2024</option>
+                                    <option value="1" class="textSecondary fw-semibold">2025</option>
+                                    <option value="2" class="textSecondary fw-semibold">2026</option>
+                                    <option value="3" class="textSecondary fw-semibold">2027</option>
+                                </select>
+                            </div>
+                            <div class="col align-self-end">
+                                <button type="submit" class="btn btn-secondary textMain fw-semibold btnGeneric"><i
+                                        class="bi bi-search"></i>
+                                    Buscar</button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <table class="table">
+                                <!--Debe llenarse la tabla con datos de la DB-->
+                                <thead>
+                                    <tr>
+                                        <th>Concepto</th>
+                                        <th>Tipo</th>
+                                        <th>Total del año</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">Concepto 1</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">tipo 1</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">2.000.000</h6>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">Concepto 4</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">tipo 3</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">1.000.000</h6>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div id="estEco"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade " id="regConcepto-tab-pane" role="tabpanel" aria-labelledby="regConcepto-tab"
+                        tabindex="0">
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-secondary textMain fw-semibold" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#modalAddRef" id="btnGeneric">
+                                    <i class="bi bi-plus-square"></i> Agregar concepto
+                                </button>
+                                <div class="modal fade" id="modalAddRef" tabindex="-1" aria-labelledby="modalAddRef" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="modalAddRef"> Nuevo concepto</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Todo el modal debe trabajar con la base de datos -->
+                                                <form action="">
+                                                    <div class="form-group">
+                                                        <div class="row p-2">
+                                                            <div class="col w-50">
+                                                                <label for="" class="form-label textSecondary fw-semibold">Nombre</label>
+                                                                <input type="text" class="form-control">
+                                                            </div>
+                                                            <div class="col">
+                                                                <label for="" class="form-label textSecondary fw-semibold">Tipo</label>
+                                                                <select name="" id="" class="form-select textSecondary fw-semibold">
+                                                                    <option value="0" class="textSecondary fw-semibold">Tip 1</option>
+                                                                    <option value="0" class="textSecondary fw-semibold">Tip 2</option>
+                                                                    <option value="0" class="textSecondary fw-semibold">Tip 3</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col">
+                                                                <label for="" class="form-label textSecondary fw-semibold">Valor</label>
+                                                                <input type="number" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row p-2">
+                                                            <div class="col">
+                                                                <div class="form-floating">
+                                                                    <textarea class="form-control textSecondary fw-semibold" placeholder="Leave a comment here" id="desConcepto"></textarea>
+                                                                    <label for="desConcepto" class="textSecondary fw-semibold">Descripcion concepto</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="submit">Guardar
+                                                    concepto</button>
+                                                <button class="btn btn-outline-dark fw-semibold"
+                                                    data-bs-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-10">
+                                <input type="search" class="form-control textSecondary fw-semibold" placeholder="Buscar concepto">
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <table class="table"><!-- Deben extraerse datos para llenar esta tabla-->
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> Nombre del concepto</th>
+                                        <th scope="col"> Valor</th>
+                                        <th scope="col"> Tipo</th>
+                                        <th scope="col"> Estado</th>
+                                        <th scope="col"><i class="bi bi-gear"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">Concepto 1</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">5000</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">Tip 1</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">Activo</h6>
+                                        </td>
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold">
+                                                <a href=""><i class="bi bi-pencil-square"></i></a>
+                                                <a href=""><i class="bi bi-trash"></i></a>
+                                            </h6>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
