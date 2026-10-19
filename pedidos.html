@@ -14,6 +14,7 @@
 
 <body>
     <!-- build:js js/main.js -->
+    <script src="./javasScript/datosFicticios.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
     <script src="./javasScript/pedidos.js"></script>
@@ -39,86 +40,73 @@
                     data-bs-target="#modalAddPedido" id="btnGeneric">
                     <i class="bi bi-plus-square"></i> Nuevo pedido
                 </button>
-                <div class="modal fade" id="modalAddPedido" tabindex="-1" aria-labelledby="modalAddPedido"
+                <div class="modal fade" id="modalAddPedido" tabindex="-1" aria-labelledby="tituloModalAddPedido"
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modalAddPedido"> Agregar pedido</h1>
+                                <h1 class="modal-title fs-5" id="tituloModalAddPedido"> Agregar pedido</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="modal-body"><!-- Todo el modal debe trabajar con la base de datos antes de agregar la referencia debe confirmar el cliente -->
-                                <form action="">
-                                    <div class="form-group">
-                                        <div class="row p-3">
-                                            <div class="col">
-                                                <label for=""
-                                                    class="form-label textSecondary fw-semibold">Cliente</label>
-                                                <select class="form-select" name="" id="nCliente"
-                                                    aria-label="Seleccione un cliente">
-                                                    <option class="textSecondary fw-semibold" value="0">Cliente 1
-                                                    </option>
-                                                    <option class="textSecondary fw-semibold" value="1">Cliente 2
-                                                    </option>
-                                                    <option class="textSecondary fw-semibold" value="2">Cliente 3
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Fecha</label>
-                                                <input type="date" class="form-control textSecondary fw-semibold"
-                                                    id="fecha">
-                                            </div>
-                                            <div class="row p-3">
-                                                <div class="col">
-                                                    <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">
-                                                        confirmar </button>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        </div>
+                            <div class="modal-body">
+                                <!-- Todo el modal debe trabajar con la base de datos antes de agregar la referencia debe confirmar el cliente -->
+                                <!-- PASO 1: Cliente y fecha -->
+                                <div class="row g-3 align-items-end p-3">
+                            
+                                    <div class="col-md-5">
+                                        <label for="nCliente" class="form-label textSecondary fw-semibold">
+                                            Cliente
+                                        </label>
+                            
+                                        <select class="form-select" id="nCliente">
+                                            <option value="">Seleccione un cliente</option>
+                                        </select>
                                     </div>
-                                </form>
-                                <form action="">
-                                    <div class="form-group p-0">
-                                        <div class="row p-3"> <!-- Esta flia debe crearse cada vez que se agregue una nueva referencia -->
-                                            <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Referencia</label>
-                                                <select name="" id="" class="form-select">
-                                                    <option value="0" class="textSecondary fw-semibold">Ref 1</option>
-                                                    <option value="1" class="textSecondary fw-semibold">Ref 2</option>
-                                                    <option value="2" class="textSecondary fw-semibold">Ref 3</option>
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Cantidad</label>
-                                                <input type="number" class="form-control textSecondary fw-semibold">
-                                            </div>
-                                            <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Precio</label>
-                                                <input type="text" value="$5.000" class="form-control textSecondary fw-semibold" disabled>  <!-- Los valores deben extraerse de la BD -->
-                                            </div>
-                                            <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Sub tolal</label>
-                                                <input type="text" value="$15.000" class="form-control textSecondary fw-semibold" disabled> <!-- Los valores deben extraerse de la BD -->
-
-                                            </div>
-                                            <div class="col">
-                                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button"> <i
-                                                        class="bi bi-trash3-fill"></i> </button>
-                                            </div>
-                                        </div>
-                                        <div class="row p-3">
-                                            <div class="col">
-                                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button"> <i class="bi bi-cart-plus-fill"></i> Agregar referencia </button>
-                                            </div>
-                                        </div>
+                            
+                                    <div class="col-md-4">
+                                        <label for="fecha" class="form-label textSecondary fw-semibold">
+                                            Fecha
+                                        </label>
+                            
+                                        <input type="date" class="form-control textSecondary fw-semibold" id="fecha">
                                     </div>
-                                </form>
+                            
+                                    <div class="col-md-3">
+                                        <button class="btn btn-success textMain fw-semibold btnGeneric w-100" type="button"
+                                            id="btnConfirmarCliente">
+                                            Confirmar
+                                        </button>
+                                    </div>
+                                </div>
+                            
+                                <div id="mensajePedido" class="px-3" role="status"></div>
+                            
+                                <hr> <!-- PASO 2: Referencias del pedido -->
+                                <div id="seccionReferencias" class="p-3" hidden>
+                            
+                                    <h2 class="fs-6 textSecondary fw-semibold mb-3">
+                                        Referencias del pedido
+                                    </h2>
+                            
+                                    <div id="contenedorReferencias"></div>
+                            
+                                    <button class="btn btn-success textMain fw-semibold btnGeneric" type="button" id="btnAgregarReferencia">
+                                        <i class="bi bi-cart-plus-fill"></i>
+                                        Agregar referencia
+                                    </button>
+                            
+                                    <div class="text-end mt-4">
+                                        <h5 class="textSecondary fw-semibold">
+                                            Total del pedido:
+                                            <span id="totalPedido">$0</span>
+                                        </h5>
+                                    </div>
+                            
+                                </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Confirmar Pedido</button>
+                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button" id="btnConfirmarPedido">Confirmar Pedido</button>
                                 <button class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
@@ -193,21 +181,17 @@
                         <nav class="row">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <input type="date" class="form-control textSecondary fw-semibold" id="fecha">
+                                    <input type="date" class="form-control textSecondary fw-semibold" id="filtroFecha">
                                 </div>
                                 <div class="col-sm-3">
-                                    <select name="" id="" class="form-select textSecondary fw-semibold">
-                                        <option value="0" class="textSecondary fw-semibold">Todos los clientes</option>
-                                        <option value="1" class="textSecondary fw-semibold"> cliente 1</option>
-                                        <option value="2" class="textSecondary fw-semibold"> Cliente 2</option>
+                                    <select name="" id="filtroCliente" class="form-select textSecondary fw-semibold">
+                                        <option value="" class="textSecondary fw-semibold">Todos los clientes</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-5">
                                     <form class="d-flex" role="search">
-                                        <input class="form-control me-2 textSecondary fw-semibold" type="search"
-                                            placeholder="Buscar cliente o referencia">
                                         <button class="btn  btn-secondary textMain fw-semibold btnGeneric "
-                                            type="submit">Buscar</button>
+                                            type="button" id="limpiarFiltros">Limpiar filtros</button>
                                     </form>
                                 </div>
                             </div>
@@ -215,7 +199,7 @@
                         <div class="container-fluid">
                             <hr>
                             <div class="row">
-                                <table class="table"><!-- Deben extraerse datos para llenar esta tabla-->
+                                <table class="table" id="tablaPedidos"><!-- Deben extraerse datos para llenar esta tabla-->
                                     <thead>
                                         <tr>
                                             <th scope="col"> Fecha</th>
@@ -225,30 +209,8 @@
                                             <th scope="col"><i class="bi bi-gear"></i></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">10-12-2023</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Cliente 1</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">
-                                                    <a href="" data-bs-toggle="modal"
-                                                        data-bs-target="#modalMostrarPedido">3 refs</a>
-                                                </h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">$20.000</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">
-                                                    <a href=""><i class="bi bi-pencil-square"></i></a>
-                                                    <a href=""><i class="bi bi-trash"></i></a>
-                                                </h6>
-                                            </td>
-                                        </tr>
+                                    <tbody id="cuerpoTablaPedidos">
+                                        <!-- JavaScript insertará los pedidos aquí-->
                                     </tbody>
                                 </table>
                                 <div class="modal fade" id="modalMostrarPedido" tabindex="-1"
@@ -256,12 +218,12 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="modalMostrarPedido"> Referencias</h1>
+                                                <h1 class="modal-title fs-5" id="TituloModalPedido"> Referencias del pedido</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <!-- Esto debe mostrar la cantidad y referencia del pedido fecha cliente-->
+                                                <p id="informacionPedido" class="textSecondary fw-semibold"> <!-- Fecha y cliente del pedido --></p>
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
@@ -269,15 +231,8 @@
                                                             <th>Cantidad</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td><h6 class="textSecondary fw-semibold">Referencia 1</h6></td>
-                                                            <td><h6 class="textSecondary fw-semibold">2</h6></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><h6 class="textSecondary fw-semibold">Referencia 3</h6></td>
-                                                            <td><h6 class="textSecondary fw-semibold">4</h6></td>
-                                                        </tr>
+                                                    <tbody id="detalleReferenciasPedido">
+                                                         <!-- JavaScript insertará las referencias aquí-->
                                                     </tbody>
                                                 </table>
                                             </div>
