@@ -17,6 +17,8 @@
     <script src="./javasScript/datosFicticios.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
     <script src="./javasScript/pedidos.js"></script>
     <!-- los datos de este script deben llenarse con los datos de la base de datos segun el año sel-->
     <!-- endbuild -->
@@ -244,51 +246,44 @@
                     </div>
                     <div class="tab-pane fade " id="estadisticas-tab-pane" role="tabpanel"
                         aria-labelledby="estadisticas-tab" tabindex="0">
-                        <div id="estPedidos"></div>
-                        <hr>
                         <div class="col-sm-3">
-                            <select name="" id=""
+                            <select id="filtroAnioPedidos"
                                 class="form-select textSecondary fw-semibold"><!--Debe extraerse los años de pedidos guardados segun la DB-->
-                                <option value="0" class="textSecondary fw-semibold">2026</option>
-                                <option value="1" class="textSecondary fw-semibold">2025</option>
-                                <option value="2" class="textSecondary fw-semibold">2024</option>
                             </select>
                         </div>
                         <hr>
                         <div class="row">
                             <table class="table">
                                 <!--Debe llenarse la tabla con datos de la DB cantidad de pedidos echos por un cliente en cada mes-->
-                                <thead>
-                                    <tr>
-                                        <th>Mes</th>
-                                        <th>Ref 1</th>
-                                        <th>Ref 2</th>
-                                        <th>Ref 3</th>
-                                        <th>Ref 4</th>
-                                        <th>Ref 5</th>
-                                    </tr>
+                                <thead id="encabezadoReferenciasPedidos">
+                                    <!-- JavaScript insertará las referencias aquí-->
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><h6 class="textSecondary fw-semibold">Enero</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">44</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">53</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">12</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">9</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">25</h6></td>
-                                    </tr>
+                                <tbody id="tablaReferenciasPedidos">
+                                    <!-- JavaScript insertará las referencias aquí-->
                                 </tbody>
                             </table>
                         </div>
+                        <hr>
+                        <div id="estPedidos"></div>
                     </div>
-                    <div class="tab-pane fade " id="imprimir-tab-pane" role="tabpanel" aria-labelledby="imprimir-tab"
-                        tabindex="0">
+                    <div class="tab-pane fade " id="imprimir-tab-pane" role="tabpanel" aria-labelledby="imprimir-tab" tabindex="0">
                         <div class="col-sm-3">
-                            <label for="" class="form-label textSecondary fw-semibold">Generar lista de pedidos</label>
-                            <input type="date" class="form-control textSecondary fw-semibold" id="fecha">
+                            <label for="fechaGenerarPedido" class="form-label textSecondary fw-semibold">Generar lista de pedidos</label>
+                            <input type="date" class="form-control textSecondary fw-semibold" id="fechaGenerarPedido">
                         </div>
                         <hr>
-                        <embed src="./pedidos/16-09-2026.pdf" type="application/pdf" width="100%"
+                    
+                        <div class="row">
+                            <div class="col d-flex justify-content-end align-items-center">
+                                <button type="button" class="btn btn-secondary textMain fw-semibold btnGeneric" id="btnGenerarPDF">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                    Generar PDF
+                                </button>
+                            </div>
+                        </div>
+                        <div id="mensajeReporte" class="mt-3"></div>
+
+                        <embed id="visorPDF" src="" type="application/pdf" width="100%"
                             height="600px" /><!--Este archivo debe generarse apartir de la base datos-->
                     </div>
                     <div class="tab-pane fade " id="referencias-tab-pane" role="tabpanel" aria-labelledby="referencias-tab" tabindex="0">

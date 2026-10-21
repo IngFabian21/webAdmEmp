@@ -1,78 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
-  var options = {
-    series: [
-      {
-        name: "Ref 1",
-        data: [44, 55, 41, 37, 22, 43, 21],
-      },
-      {
-        name: "Ref 2",
-        data: [53, 32, 33, 52, 13, 43, 32],
-      },
-      {
-        name: "Ref 3",
-        data: [12, 17, 11, 9, 15, 11, 20],
-      },
-      {
-        name: "Ref 4",
-        data: [9, 7, 5, 8, 6, 9, 4],
-      },
-      {
-        name: "Ref 5",
-        data: [25, 12, 19, 32, 25, 24, 10],
-      },
-    ],
-    chart: {
-      type: "bar",
-      height: 350,
-      stacked: true,
-    },
-    plotOptions: {
-      bar: {
-        horizontal: true,
-        dataLabels: {
-          total: {
-            enabled: true,
-            offsetX: 0,
-            style: {
-              fontSize: "13px",
-              fontWeight: 900,
-            },
-          },
-        },
-      },
-    },
-    stroke: {
-      width: 1,
-      colors: ["#fff"],
-    },
-    title: {
-      text: "Ventas mensuales por referencia",
-    },
-    xaxis: {
-      categories: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio"],
-      
-    },
-    yaxis: {
-      title: {
-        text: undefined,
-      },
-    },
-    
-    fill: {
-      opacity: 1,
-    },
-    legend: {
-      position: "top",
-      horizontalAlign: "left",
-      offsetX: 40,
-    },
-  };
-
-  var chart = new ApexCharts(document.querySelector("#estPedidos"), options);
-  chart.render();
-});
-
+/* filtros y tabla pedidos incluido modal de detalles pedido*/
 document.addEventListener("DOMContentLoaded", function () {
 
     const filtroFecha = document.getElementById("filtroFecha");
@@ -313,6 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+/*modal para agregar un pedido*/
 (document,addEventListener("DOMContentLoaded", function () {
     const nCliente = document.getElementById("nCliente");
     const fechaPedido = document.getElementById("fecha");
@@ -630,3 +557,542 @@ document.addEventListener("DOMContentLoaded", function () {
 
     cargarClientesNuevoPedido();
   }));
+
+/*ESTADÍSTICAS DE PEDIDOS: TABLA Y GRÁFICO*/
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =============================================
+       1. ELEMENTOS DEL HTML
+    ============================================= */
+
+    const selectorAnio = document.getElementById("filtroAnioPedidos");
+    const encabezadoTabla = document.getElementById(
+        "encabezadoReferenciasPedidos"
+    );
+    const cuerpoTabla = document.getElementById(
+        "tablaReferenciasPedidos"
+    );
+    const elementoGrafico = document.querySelector("#estPedidos");
+
+    // Comprobar que existan los elementos necesarios.
+    if (
+        !selectorAnio ||
+        !encabezadoTabla ||
+        !cuerpoTabla
+    ) {
+        return;
+    }
+
+    // Comprobar que los datos estén disponibles.
+    if (
+        typeof T_ORDERS === "undefined" ||
+        typeof DETAILS === "undefined" ||
+        typeof REFERENCESS === "undefined"
+    ) {
+        console.error("No se encontraron los datos de pedidos.");
+        return;
+    }
+
+    /* =============================================
+       2. MESES DEL AÑO
+    ============================================= */
+
+    const meses = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+    ];
+
+    /* =============================================
+       3. CONFIGURACIÓN DEL GRÁFICO
+    ============================================= */
+
+    let chart = null;
+
+    if (elementoGrafico && typeof ApexCharts !== "undefined") {
+
+        const opcionesGrafico = {
+            series: [],
+
+            chart: {
+                type: "bar",
+                height: 350,
+                stacked: true
+            },
+
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    dataLabels: {
+                        total: {
+                            enabled: true,
+                            offsetX: 0,
+                            style: {
+                                fontSize: "13px",
+                                fontWeight: 900
+                            }
+                        }
+                    }
+                }
+            },
+
+            stroke: {
+                width: 1,
+                colors: ["#fff"]
+            },
+
+            title: {
+                text: "Ventas mensuales por referencia"
+            },
+
+            xaxis: {
+                categories: []
+            },
+
+            yaxis: {
+                title: {
+                    text: undefined
+                }
+            },
+
+            fill: {
+                opacity: 1
+            },
+
+            legend: {
+                position: "top",
+                horizontalAlign: "left",
+                offsetX: 40
+            },
+
+            noData: {
+                text: "No hay ventas para mostrar"
+            }
+        };
+
+        chart = new ApexCharts(elementoGrafico, opcionesGrafico);
+        chart.render();
+    }
+
+    /* =============================================
+       4. CARGAR LOS AÑOS DISPONIBLES
+    ============================================= */
+
+    const anios = [
+        ...new Set(
+            T_ORDERS.map(pedido =>
+                String(pedido.date_ord).substring(0, 4)
+            )
+        )
+    ].sort((a, b) => Number(b) - Number(a));
+
+    selectorAnio.innerHTML = anios.map(anio => `
+        <option value="${anio}">${anio}</option>
+    `).join("");
+
+    /* =============================================
+       5. FUNCIÓN PRINCIPAL DE ESTADÍSTICAS
+    ============================================= */
+
+    function cargarEstadisticasPedidos() {
+
+        const anioSeleccionado = selectorAnio.value;
+
+        // Filtrar todos los pedidos del año seleccionado.
+        const pedidosAnio = T_ORDERS.filter(pedido =>
+            String(pedido.date_ord).substring(0, 4) === anioSeleccionado
+        );
+
+        // Identificar las referencias que tuvieron ventas.
+        const idsReferenciasVendidas = new Set();
+
+        pedidosAnio.forEach(pedido => {
+
+            const detallesPedido = DETAILS.filter(detalle =>
+                String(detalle.id_order) === String(pedido.id)
+            );
+
+            detallesPedido.forEach(detalle => {
+                idsReferenciasVendidas.add(
+                    String(detalle.id_reference)
+                );
+            });
+        });
+
+        const referenciasVendidas = REFERENCESS.filter(referencia =>
+            idsReferenciasVendidas.has(String(referencia.id))
+        );
+
+        /* =============================================
+           6. CREAR ENCABEZADOS DE LA TABLA
+        ============================================= */
+
+        encabezadoTabla.innerHTML = `
+            <tr>
+                <th>
+                    <h6 class="textSecondary fw-semibold">Mes</h6>
+                </th>
+
+                ${referenciasVendidas.map(referencia => `
+                    <th>
+                        <h6 class="textSecondary fw-semibold">
+                            ${referencia.name_ref}
+                        </h6>
+                    </th>
+                `).join("")}
+            </tr>
+        `;
+
+        /* =============================================
+           7. PREPARAR LAS VENTAS DE LOS 12 MESES
+        ============================================= */
+
+        const ventasPorMes = Array.from(
+            { length: 12 },
+            () => ({})
+        );
+
+        // Sumar las unidades de cada referencia por mes.
+        pedidosAnio.forEach(pedido => {
+
+            const mes = Number(
+                String(pedido.date_ord).substring(5, 7)
+            ) - 1;
+
+            // Evitar fechas con meses inválidos.
+            if (mes < 0 || mes > 11) return;
+
+            const detallesPedido = DETAILS.filter(detalle =>
+                String(detalle.id_order) === String(pedido.id)
+            );
+
+            detallesPedido.forEach(detalle => {
+
+                const idReferencia = String(detalle.id_reference);
+                const cantidad = Number(detalle.lot) || 0;
+
+                ventasPorMes[mes][idReferencia] =
+                    (ventasPorMes[mes][idReferencia] || 0) + cantidad;
+            });
+        });
+
+        /* =============================================
+           8. IDENTIFICAR TODOS LOS MESES CON VENTAS
+        ============================================= */
+
+        const mesesConVentas = ventasPorMes
+            .map((ventas, indice) => ({
+                nombre: meses[indice],
+                ventas: ventas
+            }))
+            .filter(mes =>
+                referenciasVendidas.some(referencia =>
+                    (mes.ventas[String(referencia.id)] || 0) > 0
+                )
+            );
+
+        /* =============================================
+           9. ACTUALIZAR LA TABLA
+        ============================================= */
+
+        cuerpoTabla.innerHTML = mesesConVentas.map(mes => `
+            <tr>
+                <td>
+                    <h6 class="textSecondary fw-semibold">
+                        ${mes.nombre}
+                    </h6>
+                </td>
+
+                ${referenciasVendidas.map(referencia => `
+                    <td>
+                        <h6 class="textSecondary fw-semibold">
+                            ${mes.ventas[String(referencia.id)] || 0}
+                        </h6>
+                    </td>
+                `).join("")}
+            </tr>
+        `).join("");
+
+        // Mensaje cuando no existen ventas.
+        if (mesesConVentas.length === 0) {
+            cuerpoTabla.innerHTML = `
+                <tr>
+                    <td colspan="${referenciasVendidas.length + 1}">
+                        No hay ventas registradas para este año.
+                    </td>
+                </tr>
+            `;
+        }
+
+        /* =============================================
+           10. PREPARAR LAS SERIES DEL GRÁFICO
+        ============================================= */
+
+        const seriesGrafico = referenciasVendidas.map(referencia => ({
+            name: referencia.name_ref,
+
+            data: mesesConVentas.map(mes =>
+                mes.ventas[String(referencia.id)] || 0
+            )
+        }));
+
+        /* =============================================
+           11. ACTUALIZAR EL GRÁFICO
+        ============================================= */
+
+        if (chart) {
+
+            chart.updateOptions({
+                xaxis: {
+                    categories: mesesConVentas.map(mes => mes.nombre)
+                }
+            });
+
+            chart.updateSeries(seriesGrafico);
+        }
+    }
+
+    /* =============================================
+       12. EVENTOS
+    ============================================= */
+
+    // Actualizar tabla y gráfico al cambiar el año.
+    selectorAnio.addEventListener(
+        "change",
+        cargarEstadisticasPedidos
+    );
+
+    // Cargar las estadísticas inicialmente.
+    cargarEstadisticasPedidos();
+
+});
+
+/*Generacion de pedidos diario PDF*/
+document.addEventListener("DOMContentLoaded", function () {
+
+    const selectorFecha = document.getElementById("fechaGenerarPedido");
+    const btnGenerarPDF = document.getElementById("btnGenerarPDF");
+    const mensaje = document.getElementById("mensajeReporte");
+
+    if (!selectorFecha || !btnGenerarPDF) return;
+
+    btnGenerarPDF.addEventListener("click", generarPDF);
+
+    function generarPDF() {
+        
+        const fecha = selectorFecha.value;
+
+        if (!fecha) {
+            mostrarMensaje("Selecciona una fecha para generar el reporte.");
+            return;
+        }
+
+        if (
+            typeof CLIENTS === "undefined" ||
+            typeof T_ORDERS === "undefined" ||
+            typeof DETAILS === "undefined" ||
+            typeof REFERENCESS === "undefined"
+        ) {
+            mostrarMensaje("No se pudieron cargar los datos del reporte.");
+            return;
+        }
+
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+            mostrarMensaje("No se pudo cargar la librería para generar el PDF.");
+            return;
+        }
+
+        // Buscar los pedidos de la fecha seleccionada.
+        const pedidosFecha = T_ORDERS.filter(pedido =>
+            String(pedido.date_ord).substring(0, 10) === fecha
+        );
+
+        // Preparar el total de cada referencia por cliente.
+        const referencias = [...REFERENCESS];
+        const cantidades = {};
+
+        CLIENTS.forEach(cliente => {
+            cantidades[cliente.id] = {};
+
+            referencias.forEach(referencia => {
+                cantidades[cliente.id][referencia.id] = 0;
+            });
+        });
+
+        pedidosFecha.forEach(pedido => {
+            const detalles = DETAILS.filter(detalle =>
+                Number(detalle.id_order) === Number(pedido.id)
+            );
+
+            detalles.forEach(detalle => {
+                const idCliente = Number(pedido.id_cliente);
+                const idReferencia = Number(detalle.id_reference);
+                const cantidad = Number(detalle.lot) || 0;
+
+                if (
+                    cantidades[idCliente] &&
+                    Object.prototype.hasOwnProperty.call(
+                        cantidades[idCliente],
+                        idReferencia
+                    )
+                ) {
+                    cantidades[idCliente][idReferencia] += cantidad;
+                }
+            });
+        });
+
+        // Crear las columnas y filas del PDF.
+        const encabezados = [
+            "CLIENTE",
+            ...referencias.map(referencia => referencia.name_ref),
+            "TOTAL"
+        ];
+
+        const filas = CLIENTS.map(cliente => {
+            const totalCliente = referencias.reduce(
+                (total, referencia) =>
+                    total + cantidades[cliente.id][referencia.id],
+                0
+            );
+
+            return [
+                cliente.name_ctl,
+                ...referencias.map(referencia =>
+                    cantidades[cliente.id][referencia.id] || ""
+                ),
+                totalCliente || ""
+            ];
+        });
+
+        // Calcular totales por referencia.
+        const totales = referencias.map(referencia =>
+            CLIENTS.reduce(
+                (total, cliente) =>
+                    total + cantidades[cliente.id][referencia.id],
+                0
+            )
+        );
+
+        const totalGeneral = totales.reduce(
+            (total, cantidad) => total + cantidad,
+            0
+        );
+
+        filas.push(["TOTAL", ...totales, totalGeneral]);
+
+        // Crear el documento PDF en orientación horizontal.
+        const { jsPDF } = window.jspdf;
+
+        const doc = new jsPDF({
+            orientation: "landscape",
+            unit: "mm",
+            format: "a4"
+        });
+
+        const [anio, mes, dia] = fecha.split("-");
+        const fechaTexto = `${dia}/${mes}/${anio}`;
+
+        // Encabezado del documento.
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(15);
+        doc.text("REPORTE DIARIO DE PEDIDOS", 148.5, 13, {
+            align: "center"
+        });
+
+        doc.setFontSize(10);
+        doc.text(`Fecha: ${fechaTexto}`, 148.5, 20, {
+            align: "center"
+        });
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.text(`Pedidos registrados: ${pedidosFecha.length}`, 7, 25);
+
+        
+
+        // Dibujar la tabla directamente en el PDF.
+        doc.autoTable({
+            head: [encabezados],
+            body: filas,
+            startY: 29,
+            theme: "grid",
+
+            styles: {
+                font: "helvetica",
+                fontSize: 8,
+                cellPadding: 2,
+                lineColor: [0, 0, 0],
+                lineWidth: 0.25,
+                textColor: [0, 0, 0],
+                halign: "center",
+                valign: "middle"
+            },
+
+            headStyles: {
+                fillColor: [0, 174, 220],
+                textColor: [0, 0, 0],
+                fontStyle: "bold"
+            },
+
+            columnStyles: {
+                0: {
+                    halign: "left",
+                    cellWidth: 48
+                }
+            },
+
+            alternateRowStyles: {
+                fillColor: [220, 234, 245]
+            },
+
+            didParseCell: function (data) {
+                if (
+                    data.section === "body" &&
+                    data.row.index === filas.length - 1
+                ) {
+                    data.cell.styles.fillColor = [245, 231, 178];
+                    data.cell.styles.fontStyle = "bold";
+                }
+            },
+
+            margin: {
+                top: 29,
+                right: 7,
+                bottom: 10,
+                left: 7
+            }
+        });
+
+        // Descargar el archivo sin mostrar una tabla en la página.
+        doc.save(`reporte_pedidos_${fecha}.pdf`);
+        const nombreArchivo = `reporte_pedidos_${fecha}.pdf`;
+        const rutaPDF = `./reportesPedidosDiarios/${nombreArchivo}`;
+
+        doc.save(nombreArchivo);
+
+        const visorPDF = document.getElementById("visorPDF");
+
+        if (visorPDF) {
+          visorPDF.src = rutaPDF;
+        }
+
+        mostrarMensaje("El PDF se ha generado y descargado.");
+    }
+
+    function mostrarMensaje(texto) {
+        if (mensaje) {
+            mensaje.textContent = texto;
+        }
+    }
+});
+
