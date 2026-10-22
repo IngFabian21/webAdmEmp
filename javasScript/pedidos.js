@@ -1096,3 +1096,178 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+
+/* Gestión y búsqueda dinámica de referencias */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const buscarReferencia = document.getElementById("buscarReferencia");
+    const tablaReferencias = document.getElementById("tablaReferencias");
+    const formulario = document.getElementById("formActualizarReferencia");
+
+    const modalElemento = document.getElementById("modalActualizarReferencia");
+
+    if (!buscarReferencia || !tablaReferencias || !formulario || !modalElemento) {
+        return;
+    }
+
+    const modalReferencia = bootstrap.Modal.getOrCreateInstance(modalElemento);
+
+    // Mostrar todas las referencias al cargar la página.
+    mostrarReferencias(REFERENCESS);
+
+    // Buscar mientras el usuario escribe.
+    buscarReferencia.addEventListener("input", function () {
+        const texto = buscarReferencia.value.trim().toLowerCase();
+
+        const referenciasFiltradas = REFERENCESS.filter(referencia =>
+            referencia.name_ref.toLowerCase().includes(texto)
+        );
+
+        mostrarReferencias(referenciasFiltradas);
+    });
+
+    // Generar las filas de la tabla.
+    function mostrarReferencias(referencias) {
+
+        tablaReferencias.innerHTML = "";
+
+        if (referencias.length === 0) {
+            tablaReferencias.innerHTML = `
+                <tr>
+                    <td colspan="4" class="text-center textSecondary">
+                        No se encontraron referencias.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        referencias.forEach(referencia => {
+
+            const fila = document.createElement("tr");
+
+            const estadoTexto = referencia.status_ref === "AC"
+                ? "Activo"
+                : "Inactivo";
+
+            fila.innerHTML = `
+                <td>
+                    <h6 class="textSecondary fw-semibold">
+                        ${escaparHTML(referencia.name_ref)}
+                    </h6>
+                </td>
+
+                <td>
+                    <h6 class="textSecondary fw-semibold">
+                        ${Number(referencia.price).toLocaleString("es-CO", {
+                            style: "currency",
+                            currency: "COP",
+                            maximumFractionDigits: 0
+                        })}
+                    </h6>
+                </td>
+
+                <td>
+                    <h6 class="textSecondary fw-semibold">
+                        ${estadoTexto}
+                    </h6>
+                </td>
+
+                <td>
+                    <h6 class="textSecondary fw-semibold">
+                        <a href="#"
+                           class="editarReferencia"
+                           data-id="${referencia.id}"
+                           title="Actualizar referencia"
+                           aria-label="Actualizar referencia">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    </h6>
+                </td>
+            `;
+
+            tablaReferencias.appendChild(fila);
+        });
+    }
+
+    // Abrir el modal con los datos actuales.
+    tablaReferencias.addEventListener("click", function (evento) {
+
+        const botonEditar = evento.target.closest(".editarReferencia");
+
+        if (!botonEditar) return;
+
+        evento.preventDefault();
+
+        const id = Number(botonEditar.dataset.id);
+
+        const referencia = REFERENCESS.find(item => item.id === id);
+
+        if (!referencia) return;
+
+        document.getElementById("idReferenciaEditar").value = referencia.id;
+        document.getElementById("nombreReferenciaEditar").value = referencia.name_ref;
+        document.getElementById("precioReferenciaEditar").value = referencia.price;
+        document.getElementById("estadoReferenciaEditar").value = referencia.status_ref;
+
+        document.getElementById("mensajeActualizarReferencia").textContent = "";
+
+        modalReferencia.show();
+    });
+
+    // Guardar los cambios en los datos ficticios.
+    formulario.addEventListener("submit", function (evento) {
+
+        evento.preventDefault();
+
+        const id = Number(document.getElementById("idReferenciaEditar").value);
+        const nombre = document.getElementById("nombreReferenciaEditar").value.trim();
+        const precio = Number(document.getElementById("precioReferenciaEditar").value);
+        const estado = document.getElementById("estadoReferenciaEditar").value;
+
+        const mensaje = document.getElementById("mensajeActualizarReferencia");
+
+        if (!nombre || !Number.isFinite(precio) || precio < 0) {
+            mensaje.textContent = "Ingresa un nombre y un precio válido.";
+            mensaje.className = "text-danger mb-3";
+            return;
+        }
+
+        const referencia = REFERENCESS.find(item => item.id === id);
+
+        if (!referencia) {
+            mensaje.textContent = "No se encontró la referencia.";
+            mensaje.className = "text-danger mb-3";
+            return;
+        }
+
+        // Actualizar el objeto original.
+        referencia.name_ref = nombre;
+        referencia.price = precio;
+        referencia.status_ref = estado;
+
+        // Volver a mostrar los resultados de la búsqueda actual.
+        const texto = buscarReferencia.value.trim().toLowerCase();
+
+        const referenciasFiltradas = REFERENCESS.filter(item =>
+            item.name_ref.toLowerCase().includes(texto)
+        );
+
+        mostrarReferencias(referenciasFiltradas);
+
+        modalReferencia.hide();
+    });
+
+    // Evita interpretar caracteres del nombre como HTML.
+    function escaparHTML(texto) {
+        return String(texto).replace(/[&<>"']/g, caracter => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[caracter]);
+    }
+});
+

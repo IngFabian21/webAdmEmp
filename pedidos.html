@@ -330,7 +330,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-10">
-                                <input type="search" class="form-control textSecondary fw-semibold" placeholder="Buscar Referencia">
+                                <input type="search" class="form-control textSecondary fw-semibold" placeholder="Buscar Referencia" id="buscarReferencia" autocomplete="off">
                             </div>
                         </div>
                         <div class="row p-2">
@@ -343,27 +343,60 @@
                                         <th scope="col"><i class="bi bi-gear"></i></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">Ref 1</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">5000</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">Activo</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">
-                                                <a href=""><i class="bi bi-pencil-square"></i></a>
-                                                <a href=""><i class="bi bi-trash"></i></a>
-                                            </h6>
-                                        </td>
-                                    </tr>
+                                <tbody id="tablaReferencias">
+                                     <!-- JavaScript genera las filas -->
                                 </tbody>
                             </table>
                         </div>
+                        <!-- Modal para actualizar referencia -->
+                         <div class="modal fade" id="modalActualizarReferencia" tabindex="-1" aria-labelledby="tituloModalReferencia"  aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title textSecondary fw-semibold" id="tituloModalReferencia">
+                                            Actualizar referencia
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="formActualizarReferencia">
+                                            <input type="hidden" id="idReferenciaEditar">
+                                            <div class="mb-3">
+                                                <label for="nombreReferenciaEditar" class="form-label textSecondary fw-semibold">
+                                                    Nombre de la referencia
+                                                </label>
+                                                <input type="text" class="form-control textSecondary fw-semibold"  id="nombreReferenciaEditar" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="precioReferenciaEditar" class="form-label textSecondary fw-semibold">
+                                                    Precio
+                                                </label>
+                                                <input type="text" class="form-control textSecondary fw-semibold"  id="precioReferenciaEditar"  min="0" step="1" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="estadoReferenciaEditar" class="form-label textSecondary fw-semibold">
+                                                    Estado
+                                                </label>
+                                                <select class="form-select textSecondary fw-semibold" id="estadoReferenciaEditar" required>
+                                                    <option value="AC">Activo</option>
+                                                    <option value="IN">Inactivo</option>
+                                                </select>
+                                            </div>
+                                            <div id="mensajeActualizarReferencia" class="mb-3"></div>
+                                            <div class="d-flex justify-content-end gap-2">
+                                                <button type="button" class="btn btn-outline-secondary fw-semibold" data-bs-dismiss="modal">
+                                                    Cancelar
+                                                </button>
+                                                <button type="submit" class="btn btn-secondary textMain fw-semibold btnGeneric">
+                                                    <i class="bi bi-check-circle"></i>
+                                                    Guardar cambios
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
                     </div>
 
                 </div>

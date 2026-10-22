@@ -14,6 +14,7 @@
 
 <body>
     <!-- build:js js/main.js -->
+    <script src="./javasScript/datosFicticios.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
     <script src="./javasScript/clientes.js"></script>
@@ -140,15 +141,8 @@
                         aria-labelledby="consultar-tab" tabindex="0">
                         <!-- Deben extraerse datos para llenar los clientes del select-->
                         <nav class="row">
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <form class="d-flex" role="search">
-                                        <input class="form-control me-2 textSecondary fw-semibold" type="search"
-                                            placeholder="Buscar por nombre">
-                                        <button class="btn  btn-secondary textMain btnGeneric "
-                                            type="submit">Buscar</button>
-                                    </form>
-                                </div>
+                            <div class="col-lg-10">
+                                <input class="form-control me-2 textSecondary fw-semibold" type="search" id="buscarCliente" placeholder="Buscar por nombre" autocomplete="off">
                             </div>
                         </nav>
                         <div class="container-fluid">
@@ -164,70 +158,93 @@
                                             <th scope="col"><i class="bi bi-gear"></i></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Cliente 1</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Cel 1</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Calle 123</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Activo</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">
-                                                    <a href=""><i class="bi bi-pencil-square"></i></a>
-                                                    <a href=""><i class="bi bi-trash"></i></a>
-                                                </h6>
-                                            </td>
-                                        </tr>
+                                    <tbody id="tablaClientes">
+                                         <!-- Las filas se generan desde JavaScript -->
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                        <!-- Modal para actualizar clientes -->
+                        <div class="modal fade" id="modalActualizarCliente" tabindex="-1" aria-labelledby="tituloModalCliente" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title textSecondary fw-semibold" id="tituloModalCliente">
+                                            Actualizar cliente
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="formActualizarCliente">
+                                            <input type="hidden" id="idClienteEditar">
+                                            <div class="mb-3">
+                                                <label for="nombreClienteEditar" class="form-label textSecondary fw-semibold">
+                                                    Nombre
+                                                </label>
+                                                <input type="text" class="form-control textSecondary fw-semibold" id="nombreClienteEditar" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="celularClienteEditar" class="form-label textSecondary fw-semibold">
+                                                    Celular
+                                                </label>
+                                                <input type="tel" class="form-control textSecondary fw-semibold" id="celularClienteEditar" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="direccionClienteEditar" class="form-label textSecondary fw-semibold">
+                                                    Direccion
+                                                </label>
+                                                <input type="text" class="form-control textSecondary fw-semibold" id="direccionClienteEditar" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="estadoClienteEditar" class="form-label textSecondary fw-semibold">
+                                                    Estado
+                                                </label>
+                                                <select id="estadoClienteEditar" class="form-select textSecondary fw-semibold" required>
+                                                    <option value="AC">Activo</option>
+                                                    <option value="IN">Inactivo</option>
+                                                </select>
+                                            </div>
+                                            <div class="d-flex justify-content-end gap-2">
+                                                <button type="button" class="btn btn-outline-secondary fw-semibold" data-bs-dismiss="modal">
+                                                    Cancelar
+                                                </button>
+                                            
+                                                <button type="submit" class="btn btn-secondary textMain fw-semibold btnGeneric">
+                                                    <i class="bi bi-check-circle"></i>
+                                                    Guardar cambios
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade " id="estadisticas-tab-pane" role="tabpanel"
                         aria-labelledby="estadisticas-tab" tabindex="0">
-                        <div id="estClientes"></div>
-                        <hr>
                         <div class="col-sm-3">
-                            <select name="" id=""
-                                class="form-select textSecondary fw-semibold"><!--Debe extraerse los años de pedidos guardados segun la DB-->
-                                <option value="0" class="textSecondary fw-semibold">2026</option>
-                                <option value="1" class="textSecondary fw-semibold">2025</option>
-                                <option value="2" class="textSecondary fw-semibold">2024</option>
+                            <label for="anioEstClientes" class="form-label textSecondary fw-semibold">
+                                Año
+                            </label>
+                            <select id="anioEstClientes" class="form-select textSecondary fw-semibold">
+
                             </select>
                         </div>
                         <hr>
                         <div class="row">
-                            <table class="table">
-                                <!--Debe llenarse la tabla con datos de la DB cantidad de pedidos echos por un cliente en cada mes-->
-                                <thead>
-                                    <tr>
-                                        <th>Mes</th>
-                                        <th>CLiente 1</th>
-                                        <th>Cliente 2</th>
-                                        <th>Cliente 3</th>
-                                        <th>Cliente 4</th>
-                                        <th>Cliente 5</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><h6 class="textSecondary fw-semibold">Enero</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">44</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">53</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">12</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">9</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">25</h6></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead id="encabezadoEstClientes">
+                                        <!-- Encabezados generados con JavaScript -->
+                                    </thead>
+                                    <tbody id="tablaEstClientes">
+                                        <!-- Datos generados con JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+                        <hr>
+                        <div id="estClientes"></div>
                     </div>
                 </div>
             </div>
