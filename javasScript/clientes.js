@@ -178,8 +178,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* estadisticas de clientes */
-
-
 document.addEventListener("DOMContentLoaded", function () {
 
     // =========================================
@@ -563,3 +561,84 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+/* Agregar clientes */
+document.addEventListener("DOMContentLoaded", function () {
+
+    const formulario = document.getElementById("formAddCliente");
+    const modalElemento = document.getElementById("modalAddCliente");
+
+    const campoNombre = document.getElementById("nombreNuevoCliente");
+    const campoCelular = document.getElementById("celularNuevoCliente");
+    const campoDireccion = document.getElementById("direccionNuevoCliente");
+
+    const botonGuardar = document.getElementById("btnGuardarCliente");
+
+    if (
+        !formulario ||
+        !modalElemento ||
+        !campoNombre ||
+        !campoCelular ||
+        !campoDireccion ||
+        !botonGuardar
+    ) {
+        console.error("No se encontraron los elementos del formulario de clientes.");
+        return;
+    }
+
+    formulario.addEventListener("submit", function (evento) {
+        evento.preventDefault();
+
+        if (typeof CLIENTS === "undefined") {
+            console.error("No se encontró el arreglo CLIENTS.");
+            alert("No se pudieron cargar los datos de clientes.");
+            return;
+        }
+
+        const nombre = campoNombre.value.trim();
+        const celular = campoCelular.value.trim();
+        const direccion = campoDireccion.value.trim();
+
+        // Validar los campos
+        if (!nombre || !celular || !direccion) {
+            alert("Completa todos los campos antes de guardar.");
+            return;
+        }
+
+        // Generar un ID nuevo
+        const nuevoId = CLIENTS.length > 0
+            ? Math.max(...CLIENTS.map(cliente => Number(cliente.id) || 0)) + 1
+            : 1;
+
+        // Crear el objeto del cliente
+        const nuevoCliente = {
+            id: nuevoId,
+            name_ctl: nombre,
+            phone: celular,
+            address_ctl: direccion,
+            status_ctl: "AC"
+        };
+
+        // Agregarlo a los datos ficticios
+        CLIENTS.push(nuevoCliente);
+
+        console.log("Cliente agregado:", nuevoCliente);
+
+        // Actualizar la tabla si está disponible la función
+        if (typeof mostrarClientes === "function") {
+            mostrarClientes(CLIENTS);
+        }
+
+        // Limpiar formulario
+        formulario.reset();
+
+        // Cerrar modal
+        const modal = bootstrap.Modal.getInstance(modalElemento);
+
+        if (modal) {
+            modal.hide();
+        }
+
+        alert("Cliente agregado correctamente.");
+    });
+
+});

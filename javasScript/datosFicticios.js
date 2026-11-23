@@ -555,79 +555,90 @@ const UNIT_TYPES = [
 /* ============================================================
    PRODUCTS
    ============================================================ */
-
 const PRODUCTS = [
     {
         id_prod: 1,
         name_prod: "Arroz",
         price: 4200,
-        id_unit_type: 1
+        id_unit_type: 1,
+        min_stock: 30
     },
     {
         id_prod: 2,
         name_prod: "Pollo",
         price: 12500,
-        id_unit_type: 1
+        id_unit_type: 1,
+        min_stock: 20
     },
     {
         id_prod: 3,
         name_prod: "Carne de res",
         price: 22000,
-        id_unit_type: 1
+        id_unit_type: 1,
+        min_stock: 15
     },
     {
         id_prod: 4,
         name_prod: "Camarón",
         price: 30000,
-        id_unit_type: 1
+        id_unit_type: 1,
+        min_stock: 15
     },
     {
         id_prod: 5,
         name_prod: "Verduras mixtas",
         price: 7500,
-        id_unit_type: 1
+        id_unit_type: 1,
+        min_stock: 20
     },
     {
         id_prod: 6,
         name_prod: "Aceite vegetal",
         price: 9500,
-        id_unit_type: 3
+        id_unit_type: 3,
+        min_stock: 15
     },
     {
         id_prod: 7,
         name_prod: "Salsa de soya",
         price: 8500,
-        id_unit_type: 3
+        id_unit_type: 3,
+        min_stock: 15
     },
     {
         id_prod: 8,
         name_prod: "Huevos",
         price: 18000,
-        id_unit_type: 5
+        id_unit_type: 5,
+        min_stock: 15
     },
     {
         id_prod: 9,
         name_prod: "Sal",
         price: 2200,
-        id_unit_type: 2
+        id_unit_type: 2,
+        min_stock: 10
     },
     {
         id_prod: 10,
         name_prod: "Cebolla",
         price: 4800,
-        id_unit_type: 1
+        id_unit_type: 1,
+        min_stock: 15
     },
     {
         id_prod: 11,
         name_prod: "Pimentón",
         price: 6200,
-        id_unit_type: 1
+        id_unit_type: 1,
+        min_stock: 15
     },
     {
         id_prod: 12,
         name_prod: "Ajo",
         price: 9000,
-        id_unit_type: 2
+        id_unit_type: 2,
+        min_stock: 10
     }
 ];
 

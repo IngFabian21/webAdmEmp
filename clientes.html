@@ -45,40 +45,39 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modalAddCliente"> Nuevo cliente</h1>
+                                <h1 class="modal-title fs-5" id="tituloModalAddCliente"> Nuevo cliente</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="">
+                                <form id="formAddCliente">
                                     <div class="form-group">
                                         <div class="row p-3">
                                             <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Nombre
-                                                    cliente</label>
-                                                <input type="text" class="form-control w-75">
+                                                <label for="nombreNuevoCliente" class="form-label textSecondary fw-semibold">
+                                                    Nombre cliente
+                                                </label>
+                                                <input type="text" class="form-control w-75" id="nombreNuevoCliente" required>
                                             </div>
-
-                                            
                                         </div>
                                         <div class="row p-3">
                                             <div class="col">
-                                                <label for=""
+                                                <label for="celularNuevoCliente"
                                                     class="form-label textSecondary fw-semibold">Celular</label>
-                                                <input type="text" class="form-control w-75" id="">
+                                                <input type="tel" class="form-control w-75" id="celularNuevoCliente" required>
                                             </div>
                                         </div>
                                         <div class="row p-3">
                                             <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Direccion</label>
-                                                <input type="text" class="form-control w-75" id="">
+                                                <label for="direccionNuevoCliente" class="form-label textSecondary fw-semibold">Direccion</label>
+                                                <input type="text" class="form-control w-75" id="direccionNuevoCliente">
                                             </div>
                                         </div>
                                     </div>
                                 </form>                     
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Guardar cliente</button>
+                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="submit" form="formAddCliente" id="btnGuardarCliente">Guardar cliente</button>
                                 <button class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </div>

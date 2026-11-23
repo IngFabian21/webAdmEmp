@@ -14,9 +14,14 @@
 
 <body>
     <!-- build:js js/main.js -->
+    <script src="./javasScript/datosFicticios.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
     <script src="./javasScript/clientes.js"></script>
+   
+    <script src="./javasScript/inventario.js"></script>
     <!-- los datos de este script deben llenarse con los datos de la base de datos segun el año sel-->
     <!-- endbuild -->
     <div class="container-fluid navbarStyles">
@@ -39,67 +44,114 @@
                     data-bs-target="#modalAddReMov" id="btnGeneric">
                     <i class="bi bi-plus-square"></i> Registrar movimiento
                 </button>
-                <div class="modal fade" id="modalAddReMov" tabindex="-1" aria-labelledby="modalAddReMov"
-                    aria-hidden="true">
+                
+                <div class="modal fade" id="modalAddReMov" tabindex="-1" aria-labelledby="tituloModalMovimiento" aria-hidden="true">
+                
                     <div class="modal-dialog">
                         <div class="modal-content">
+                
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modalAddReMov"> Registrar movimiento</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <h1 class="modal-title fs-5" id="tituloModalMovimiento">
+                                    Registrar movimiento
+                                </h1>
+                
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+                
                             <div class="modal-body">
-                                <!-- Todo el modal debe trabajar con la base de datos antes de agregar la referencia debe confirmar el cliente -->
-                                <form action="">
+                
+                                <form id="formNuevoMovimiento">
+                
                                     <div class="form-group">
+                
                                         <div class="row p-3">
                                             <div class="col text-center">
-                                                <input type="radio" class="btn-check " name="options-base"
-                                                    id="ReMovEntrada" autocomplete="off" checked>
+                
+                                                <input type="radio" class="btn-check" name="tipoMovimiento" id="ReMovEntrada"
+                                                    value="entrada" autocomplete="off" checked>
+                
                                                 <label for="ReMovEntrada"
                                                     class="btn w-25 btn-outline-warning textSecondary fw-semibold">
-                                                    Entrada</label>
-                                                <input type="radio" class="btn-check textMain " name="options-base"
-                                                    id="ReMovSalida" autocomplete="off">
-                                                <label for="ReMovSalida"
-                                                    class="btn w-25 btn-outline-danger textSecondary fw-semibold">
-                                                    Salida</label>
+                                                    Entrada
+                                                </label>
+                
+                                                <input type="radio" class="btn-check" name="tipoMovimiento" id="ReMovSalida"
+                                                    value="salida" autocomplete="off">
+                
+                                                <label for="ReMovSalida" class="btn w-25 btn-outline-danger textSecondary fw-semibold">
+                                                    Salida
+                                                </label>
+                
                                             </div>
                                         </div>
+                
                                         <div class="row p-3">
                                             <div class="col">
-                                                <label for=""
-                                                    class="form-label textSecondary fw-semibold">Producto</label>
-                                                <select name="" id="" class="form-select textSecondary fw-semibold">
-                                                    <option value="0"> Product 1</option>
-                                                    <option value="1"> Product 2</option>
+                
+                                                <label for="productoMovimiento" class="form-label textSecondary fw-semibold">
+                                                    Producto
+                                                </label>
+                
+                                                <select name="productoMovimiento" id="productoMovimiento"
+                                                    class="form-select textSecondary fw-semibold" required>
+                                                    <option value="">Seleccionar producto</option>
                                                 </select>
+                
                                             </div>
                                         </div>
+                
                                         <div class="row p-3">
+                
                                             <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Fecha</label>
-                                                <input type="date" class="form-control textSecondary fw-semibold"
-                                                    id="fecha">
+                                                <label for="fechaMovimiento" class="form-label textSecondary fw-semibold">
+                                                    Fecha
+                                                </label>
+                
+                                                <input type="date" class="form-control textSecondary fw-semibold" id="fechaMovimiento"
+                                                    required>
                                             </div>
+                
                                             <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">
-                                                    Cantidad</label>
-                                                <input type="number" class="form-control textSecondary fw-semibold">
+                                                <label for="cantidadMovimiento" class="form-label textSecondary fw-semibold">
+                                                    Cantidad
+                                                </label>
+                
+                                                <input type="number" class="form-control textSecondary fw-semibold"
+                                                    id="cantidadMovimiento" min="0.01" step="0.01" required>
+                                            </div>
+                
+                                        </div>
+                
+                                        <div class="row px-3 pb-2">
+                                            <div class="col">
+                                                <small id="existenciaProducto" class="textSecondary fw-semibold">
+                                                    Existencia actual: ---
+                                                </small>
                                             </div>
                                         </div>
+                
                                     </div>
+                
+                                    <div class="modal-footer">
+                
+                                        <button class="btn btn-success textMain fw-semibold btnGeneric" type="submit">
+                                            Guardar movimiento
+                                        </button>
+                
+                                        <button class="btn btn-outline-dark fw-semibold" type="button" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                
+                                    </div>
+                
                                 </form>
+                
                             </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Guardar
-                                    movimiento</button>
-                                <button class="btn btn-outline-dark fw-semibold"
-                                    data-bs-dismiss="modal">Cancelar</button>
-                            </div>
+                
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -166,132 +218,155 @@
                                     data-bs-toggle="modal" data-bs-target="#modalAddRef" id="btnGeneric">
                                     <i class="bi bi-plus-square"></i> Agregar producto
                                 </button>
-                                <div class="modal fade" id="modalAddRef" tabindex="-1" aria-labelledby="modalAddRef"
-                                    aria-hidden="true">
+                                <div class="modal fade" id="modalAddRef" tabindex="-1" aria-labelledby="tituloModalProducto" aria-hidden="true">
+                                
                                     <div class="modal-dialog">
                                         <div class="modal-content">
+                                
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="modalAddRef"> Nuevo producto</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                                <h1 class="modal-title fs-5" id="tituloModalProducto">
+                                                    Nuevo producto
+                                                </h1>
+                                
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
+                                
                                             <div class="modal-body">
-                                                <!-- Todo el modal debe trabajar con la base de datos antes de agregar la referencia debe confirmar el cliente -->
-                                                <form action="">
+                                
+                                                <form id="formNuevoProducto">
+                                
                                                     <div class="form-group">
+                                
                                                         <div class="row p-3">
                                                             <div class="col">
-                                                                <label for=""
-                                                                    class="form-label textSecondary fw-semibold">Nombre
-                                                                    del producto</label>
-                                                                <input type="text"
-                                                                    class="form-control textSecondary fw-semibold">
+                                                                <label for="nombreProducto" class="form-label textSecondary fw-semibold">
+                                                                    Nombre del producto
+                                                                </label>
+                                
+                                                                <input type="text" id="nombreProducto" class="form-control textSecondary fw-semibold"
+                                                                    required>
                                                             </div>
                                                         </div>
+                                
                                                         <div class="row p-3">
+                                
                                                             <div class="col">
-                                                                <!-- Deben extraerse las unidade de la BD -->
-                                                                <label for="unidadMedidad"
-                                                                    class="form-label textSecondary fw-semibold">Unidad
-                                                                    de medidia</label>
-                                                                <select name="unidadMedidad" id="unidadMedidad"
-                                                                    class="form-select">
-                                                                    <option value="1" class="textSecondary fw-semibold">
-                                                                        Metro(m)</option>
-                                                                    <option value="2" class="textSecondary fw-semibold">
-                                                                        Kilogramo(Kg)</option>
-                                                                    <option value="3" class="textSecondary fw-semibold">
-                                                                        libra(lb)</option>
+                                                                <label for="unidadMedidad" class="form-label textSecondary fw-semibold">
+                                                                    Unidad de medida
+                                                                </label>
+                                
+                                                                <select name="unidadMedidad" id="unidadMedidad" class="form-select" required>
+                                                                    <option value="">Seleccionar unidad</option>
                                                                 </select>
                                                             </div>
+                                
                                                             <div class="col">
-                                                                <label for=""
-                                                                    class="form-label textSecondary fw-semibold">Precio
-                                                                    unitario</label>
-                                                                <input type="number"
-                                                                    class="form-control textSecondary fw-semibold">
+                                                                <label for="precioProducto" class="form-label textSecondary fw-semibold">
+                                                                    Precio unitario
+                                                                </label>
+                                
+                                                                <input type="number" id="precioProducto" class="form-control textSecondary fw-semibold"
+                                                                    min="0" step="0.01" required>
                                                             </div>
+                                
                                                         </div>
+                                
                                                         <div class="row p-3">
+                                
                                                             <div class="col">
-                                                                <label for=""
-                                                                    class="form-label textSecondary fw-semibold">Existencia
-                                                                    incial</label>
-                                                                <input type="number"
-                                                                    class="form-control textSecondary fw-semibold"
-                                                                    id="fecha">
+                                                                <label for="existenciaInicial" class="form-label textSecondary fw-semibold">
+                                                                    Existencia inicial
+                                                                </label>
+                                
+                                                                <input type="number" id="existenciaInicial"
+                                                                    class="form-control textSecondary fw-semibold" min="0" step="0.01" required>
                                                             </div>
+                                
+                                                            <div class="col">
+                                                                <label for="stockMinimo" class="form-label textSecondary fw-semibold">
+                                                                    Stock mínimo
+                                                                </label>
+                                
+                                                                <input type="number" id="stockMinimo" class="form-control textSecondary fw-semibold"
+                                                                    min="0" step="0.01" required>
+                                                            </div>
+                                
                                                         </div>
+                                
                                                     </div>
+                                
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-success textMain fw-semibold btnGeneric" type="submit">
+                                                            Guardar producto
+                                                        </button>
+                                
+                                                        <button class="btn btn-outline-dark fw-semibold" type="button" data-bs-dismiss="modal">
+                                                            Cancelar
+                                                        </button>
+                                                    </div>
+                                
                                                 </form>
+                                
                                             </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-success textMain fw-semibold btnGeneric"
-                                                    type="button">Guardar
-                                                    movimiento</button>
-                                                <button class="btn btn-outline-dark fw-semibold"
-                                                    data-bs-dismiss="modal">Cancelar</button>
-                                            </div>
+                                
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </nav>
                         <div class="container-fluid">
                             <hr>
                             <div class="row">
-                                <table class="table"><!-- Deben extraerse datos para llenar esta tabla-->
+                                <table class="table">
+                                    <!-- Deben extraerse datos para llenar esta tabla -->
                                     <thead>
                                         <tr>
-                                            <th scope="col">Producto</th>
-                                            <th scope="col">Unidad</th>
-                                            <th scope="col">Ultima entrada</th>
-                                            <th scope="col">Existenica actual</th>
-                                            <th scope="col">Nivel</th>
+                                            <th scope="col" onclick="ordenarInventario('producto')" style="cursor: pointer;">
+                                                Producto ↕
+                                            </th>
+                                            <th scope="col" onclick="ordenarInventario('unidad')" style="cursor: pointer;">
+                                                Unidad ↕
+                                            </th>
+                                            <th scope="col" onclick="ordenarInventario('entrada')" style="cursor: pointer;">
+                                                Última entrada ↕
+                                            </th>
+                                            <th scope="col" onclick="ordenarInventario('existencia')" style="cursor: pointer;">
+                                                Existencia actual ↕
+                                            </th>
+                                            <th scope="col" onclick="ordenarInventario('nivel')" style="cursor: pointer;">
+                                                Nivel ↕
+                                            </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Prod 1</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Kg</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">70</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">200</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Bajo 30%</h6>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <tbody id="tablaInventario"></tbody>
+                                    </table>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade " id="movimientos-tab-pane" role="tabpanel"
                         aria-labelledby="movimientos-tab" tabindex="0">
-                        <div class="row">
+                        <div class="row align-items-center">
+                        
                             <div class="col-3">
-                                <input type="date" class="form-control textSecondary fw-semibold">
+                                <input type="date" id="filtroFecha" class="form-control textSecondary fw-semibold">
                             </div>
+                        
                             <div class="col-3">
-                                <select name="" id="" class="form-select textSecondary fw-semibold">
-                                    <!--Debe extraerse los productos de la DB-->
-                                    <option value="0" class="textSecondary fw-semibold">Todos los productos</option>
-                                    <option value="1" class="textSecondary fw-semibold">Prod 1</option>
-                                    <option value="2" class="textSecondary fw-semibold">Prod 2</option>
-                                </select>
+                                <input type="text" id="filtroProducto" class="form-control textSecondary fw-semibold"
+                                    placeholder="Buscar producto...">
                             </div>
+                        
+                            <div class="col-auto">
+                                <button type="button" id="btnBorrarFiltros" class="btn btn-secondary textMain fw-semibold btnGeneric">
+                                    <i class="bi bi-x-circle"></i> Borrar filtros
+                                </button>
+                            </div>
+                        
                         </div>
                         <hr>
                         <div class="row">
                             <table class="table">
-                                <!--Debe llenarse la tabla con datos de la DB cantidad de pedidos echos por un cliente en cada mes-->
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
@@ -301,44 +376,37 @@
                                         <th>Saldo</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><h6 class="textSecondary fw-semibold">16-09-2026</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">Prod 1</h6></td>
-                                        <td><h6 class="text-success fw-semibold">---</h6></td>
-                                        <td><h6 class="text-danger fw-semibold">40</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">126</h6></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h6 class="textSecondary fw-semibold">16-09-2026</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">Prod 2</h6></td>
-                                        <td><h6 class="text-success fw-semibold">30</h6></td>
-                                        <td><h6 class="text-danger fw-semibold">---</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">200</h6></td>
-                                    </tr>
+                        
+                                <tbody id="tablaMovimientos">
+                                    <!-- Los movimientos se cargan desde JavaScript -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="tab-pane fade " id="invMens-tab-pane" role="tabpanel"
-                        aria-labelledby="invMens-tab" tabindex="0">
-                        <div class="row">
+                    <div class="tab-pane fade" id="invMens-tab-pane" role="tabpanel" aria-labelledby="invMens-tab" tabindex="0">
+                    
+                        <div class="row align-items-center">
+                    
                             <div class="col-3">
-                                <select name="" id="" class="form-select textSecondary fw-semibold">
-                                    <!--Debe extraerse los productos de la DB-->
-                                    <option value="0" class="textSecondary fw-semibold">Agosto 2026</option>
-                                    <option value="1" class="textSecondary fw-semibold">Julio 2026</option>
-                                    <option value="2" class="textSecondary fw-semibold">Junio 2026</option>
+                                <select id="mesInventario" class="form-select textSecondary fw-semibold">
+                                    <option value="">Seleccionar mes</option>
                                 </select>
                             </div>
+                    
                             <div class="col-3">
-                                <button type="button" class="btn btn-secondary textMain fw-semibold btnGeneric"><i class="bi bi-printer-fill"></i> Imprimir</button>
+                                <button type="button" id="btnDescargarInventario" class="btn btn-secondary textMain fw-semibold btnGeneric">
+                                    <i class="bi bi-arrow-down-square-fill"></i>
+                                    Descargar
+                                </button>
                             </div>
+                    
                         </div>
+                    
                         <hr>
+                    
                         <div class="row">
                             <table class="table">
-                                <!--Debe llenarse la tabla con datos de la DB-->
+                    
                                 <thead>
                                     <tr>
                                         <th>Producto</th>
@@ -347,30 +415,32 @@
                                         <th>Valor total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><h6 class="textSecondary fw-semibold">Prod 1</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">128 lb</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">18.500</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">2.368.000</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold"></h6></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h6 class="textSecondary fw-semibold">Prod 2</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">10 kg</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">8.500</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">2.008.000</h6></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h6 class="textSecondary fw-semibold">Valor total del inventario</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold"></h6></td>
-                                        <td><h6 class="textSecondary fw-semibold"></h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">4.008.000</h6></td>
-                                    </tr>
+                    
+                                <tbody id="tablaInventarioMensual">
+                                    <!-- Datos cargados desde JavaScript -->
                                 </tbody>
+                    
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3">
+                                            <h6 class="textSecondary fw-semibold">
+                                                Valor total del inventario
+                                            </h6>
+                                        </td>
+                    
+                                        <td>
+                                            <h6 class="textSecondary fw-semibold" id="totalInventarioMensual">
+                                                $0
+                                            </h6>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                    
                             </table>
                         </div>
+                    
                     </div>
+
                 </div>
             </div>
         </div>

@@ -240,323 +240,482 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /*modal para agregar un pedido*/
-(document,addEventListener("DOMContentLoaded", function () {
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // =========================================
+    // 1. ELEMENTOS DEL HTML
+    // =========================================
+
     const nCliente = document.getElementById("nCliente");
     const fechaPedido = document.getElementById("fecha");
     const btnConfirmarCliente = document.getElementById("btnConfirmarCliente");
     const seccionReferencias = document.getElementById("seccionReferencias");
-    const contenedorReferencias = document.getElementById(
-      "contenedorReferencias",
-    );
-    const btnAgregarReferencia = document.getElementById(
-      "btnAgregarReferencia",
-    );
+    const contenedorReferencias = document.getElementById("contenedorReferencias");
+    const btnAgregarReferencia = document.getElementById("btnAgregarReferencia");
     const btnConfirmarPedido = document.getElementById("btnConfirmarPedido");
     const totalPedido = document.getElementById("totalPedido");
     const mensajePedido = document.getElementById("mensajePedido");
+    const modalElemento = document.getElementById("modalAddPedido");
+
+    if (
+        !nCliente || !fechaPedido || !btnConfirmarCliente ||
+        !seccionReferencias || !contenedorReferencias ||
+        !btnAgregarReferencia || !btnConfirmarPedido ||
+        !totalPedido || !mensajePedido || !modalElemento
+    ) {
+        console.error("No se encontraron todos los elementos del modal de pedidos.");
+        return;
+    }
 
     let clienteConfirmado = false;
 
-    /* =========================================
-   CARGAR CLIENTES
-   Usa los datos de datosFicticios.js
-   ========================================= */
+    // =========================================
+    // 2. MOSTRAR MENSAJES
+    // =========================================
+
+    function mostrarMensaje(texto, tipo = "danger") {
+        mensajePedido.textContent = texto;
+        mensajePedido.className = `px-3 text-${tipo}`;
+    }
+
+    // =========================================
+    // 3. CARGAR CLIENTES ACTIVOS
+    // =========================================
 
     function cargarClientesNuevoPedido() {
-      nCliente.innerHTML = `
-        <option value="">Seleccione un cliente</option>
-    `;
 
-      CLIENTS.filter((cliente) => cliente.status_ctl === "AC").forEach(
-        (cliente) => {
-          const opcion = document.createElement("option");
+        if (typeof CLIENTS === "undefined") {
+            mostrarMensaje("No se encontraron los datos de clientes.");
+            return;
+        }
 
-          opcion.value = cliente.id;
-          opcion.textContent = cliente.name_ctl;
+        nCliente.innerHTML = "";
 
-          nCliente.appendChild(opcion);
-        },
-      );
+        const opcionInicial = document.createElement("option");
+        opcionInicial.value = "";
+        opcionInicial.textContent = "Seleccione un cliente";
+        nCliente.appendChild(opcionInicial);
+
+        CLIENTS
+            .filter(cliente => cliente.status_ctl === "AC")
+            .forEach(cliente => {
+                const opcion = document.createElement("option");
+
+                opcion.value = cliente.id;
+                opcion.textContent = cliente.name_ctl;
+
+                nCliente.appendChild(opcion);
+            });
     }
 
-    /* =========================================
-   CONFIRMAR CLIENTE Y FECHA
-   ========================================= */
+    // =========================================
+    // 4. CONFIRMAR CLIENTE Y FECHA
+    // =========================================
 
     btnConfirmarCliente.addEventListener("click", function () {
-      const idCliente = Number(nCliente.value);
-      const fecha = fechaPedido.value;
 
-      if (!idCliente || !fecha) {
-        mensajePedido.textContent =
-          "Selecciona un cliente y una fecha antes de continuar.";
-        mensajePedido.className = "text-danger px-3";
-        return;
-      }
+        const idCliente = nCliente.value;
+        const fecha = fechaPedido.value;
 
-      clienteConfirmado = true;
+        if (!idCliente || !fecha) {
+            clienteConfirmado = false;
+            seccionReferencias.hidden = true;
 
-      seccionReferencias.hidden = false;
-      btnConfirmarPedido.disabled = false;
+            mostrarMensaje(
+                "Selecciona un cliente y una fecha antes de continuar."
+            );
+            return;
+        }
 
-      // Si aún no hay filas, agregar la primera.
-      if (contenedorReferencias.children.length === 0) {
-        agregarFilaReferencia();
-      }
+        if (typeof CLIENTS === "undefined") {
+            mostrarMensaje("No se encontraron los datos de clientes.");
+            return;
+        }
 
-      mensajePedido.textContent =
-        "Cliente y fecha confirmados. Ahora agrega las referencias.";
-      mensajePedido.className = "text-success px-3";
+        const clienteExiste = CLIENTS.some(
+            cliente =>
+                String(cliente.id) === String(idCliente) &&
+                cliente.status_ctl === "AC"
+        );
+
+        if (!clienteExiste) {
+            clienteConfirmado = false;
+            seccionReferencias.hidden = true;
+            mostrarMensaje("El cliente seleccionado no está activo.");
+            return;
+        }
+
+        clienteConfirmado = true;
+        seccionReferencias.hidden = false;
+        btnConfirmarPedido.disabled = false;
+
+        if (contenedorReferencias.children.length === 0) {
+            agregarFilaReferencia();
+        }
+
+        mostrarMensaje(
+            "Cliente y fecha confirmados. Ahora agrega las referencias.",
+            "success"
+        );
     });
 
-    /* =========================================
-   AGREGAR UNA FILA DE REFERENCIA
-   ========================================= */
+    // Si se cambia el cliente o la fecha, hay que confirmar de nuevo.
+    nCliente.addEventListener("change", invalidarConfirmacion);
+    fechaPedido.addEventListener("change", invalidarConfirmacion);
+
+    function invalidarConfirmacion() {
+        clienteConfirmado = false;
+        seccionReferencias.hidden = true;
+        btnConfirmarPedido.disabled = true;
+        mostrarMensaje("Confirma nuevamente el cliente y la fecha.", "warning");
+    }
+
+    // =========================================
+    // 5. AGREGAR FILA DE REFERENCIA
+    // =========================================
 
     function agregarFilaReferencia() {
-      if (!clienteConfirmado) {
-        mensajePedido.textContent = "Primero confirma el cliente y la fecha.";
-        mensajePedido.className = "text-danger px-3";
-        return;
-      }
 
-      const fila = document.createElement("div");
+        if (!clienteConfirmado) {
+            mostrarMensaje("Primero confirma el cliente y la fecha.");
+            return;
+        }
 
-      fila.className = "row g-2 align-items-end p-3 border-bottom";
+        if (typeof REFERENCESS === "undefined") {
+            mostrarMensaje("No se encontraron los datos de referencias.");
+            return;
+        }
 
-      fila.innerHTML = `
-        <div class="col-md-4">
-            <label class="form-label textSecondary fw-semibold">
-                Referencia
-            </label>
+        const referenciasActivas = REFERENCESS.filter(
+            referencia => referencia.status_ref === "AC"
+        );
 
-            <select class="form-select selectorReferencia">
-                <option value="">Seleccione una referencia</option>
-            </select>
-        </div>
+        if (referenciasActivas.length === 0) {
+            mostrarMensaje("No hay referencias activas disponibles.");
+            return;
+        }
 
-        <div class="col-md-2">
-            <label class="form-label textSecondary fw-semibold">
-                Cantidad
-            </label>
+        const fila = document.createElement("div");
+        fila.className = "row g-2 align-items-end p-3 border-bottom";
 
-            <input type="number"
-                   class="form-control cantidadReferencia"
-                   min="1" step="1" value="1">
-        </div>
+        fila.innerHTML = `
+            <div class="col-md-4">
+                <label class="form-label textSecondary fw-semibold">
+                    Referencia
+                </label>
+                <select class="form-select selectorReferencia">
+                    <option value="">Seleccione una referencia</option>
+                </select>
+            </div>
 
-        <div class="col-md-2">
-            <label class="form-label textSecondary fw-semibold">
-                Precio
-            </label>
+            <div class="col-md-2">
+                <label class="form-label textSecondary fw-semibold">
+                    Cantidad
+                </label>
+                <input type="number" class="form-control cantidadReferencia"
+                    min="1" step="1" value="1">
+            </div>
 
-            <input type="text"
-                   class="form-control precioReferencia"
-                   value="$0" disabled>
-        </div>
+            <div class="col-md-2">
+                <label class="form-label textSecondary fw-semibold">
+                    Precio
+                </label>
+                <input type="text" class="form-control precioReferencia"
+                    value="$0" disabled>
+            </div>
 
-        <div class="col-md-2">
-            <label class="form-label textSecondary fw-semibold">
-                Subtotal
-            </label>
+            <div class="col-md-2">
+                <label class="form-label textSecondary fw-semibold">
+                    Subtotal
+                </label>
+                <input type="text" class="form-control subtotalReferencia"
+                    value="$0" disabled>
+            </div>
 
-            <input type="text"
-                   class="form-control subtotalReferencia"
-                   value="$0" disabled>
-        </div>
-
-        <div class="col-md-2">
-            <button type="button"
+            <div class="col-md-2">
+                <button type="button"
                     class="btn btn-success textMain fw-semibold btnGeneric eliminarFila w-100"
-                    aria-label="Eliminar referencia"
-                    title="Eliminar referencia">
-                <i class="bi bi-trash3-fill"></i>
-            </button>
-        </div>
-    `;
+                    aria-label="Eliminar referencia" title="Eliminar referencia">
+                    <i class="bi bi-trash3-fill"></i>
+                </button>
+            </div>
+        `;
 
-      const selector = fila.querySelector(".selectorReferencia");
-      const cantidad = fila.querySelector(".cantidadReferencia");
+        const selector = fila.querySelector(".selectorReferencia");
+        const cantidad = fila.querySelector(".cantidadReferencia");
 
-      // Cargar referencias activas desde datosFicticios.js.
-      REFERENCESS.filter(
-        (referencia) => referencia.status_ref === "AC",
-      ).forEach((referencia) => {
-        const opcion = document.createElement("option");
-
-        opcion.value = referencia.id;
-        opcion.textContent = referencia.name_ref;
-
-        selector.appendChild(opcion);
-      });
-
-      // Actualizar precio, subtotal y total.
-      selector.addEventListener("change", actualizarTotales);
-      cantidad.addEventListener("input", actualizarTotales);
-
-      // Eliminar esta fila.
-      fila
-        .querySelector(".eliminarFila")
-        .addEventListener("click", function () {
-          fila.remove();
-          actualizarTotales();
+        referenciasActivas.forEach(referencia => {
+            const opcion = document.createElement("option");
+            opcion.value = referencia.id;
+            opcion.textContent = referencia.name_ref;
+            selector.appendChild(opcion);
         });
 
-      contenedorReferencias.appendChild(fila);
+        selector.addEventListener("change", actualizarTotales);
+        cantidad.addEventListener("input", actualizarTotales);
 
-      actualizarTotales();
+        fila.querySelector(".eliminarFila").addEventListener("click", function () {
+            fila.remove();
+            actualizarTotales();
+        });
+
+        contenedorReferencias.appendChild(fila);
+        actualizarTotales();
     }
-
-    /* =========================================
-   CALCULAR SUBTOTALES Y TOTAL
-   ========================================= */
-
-    function actualizarTotales() {
-      let total = 0;
-
-      const filas = contenedorReferencias.querySelectorAll(".row");
-
-      filas.forEach((fila) => {
-        const idReferencia = Number(
-          fila.querySelector(".selectorReferencia").value,
-        );
-
-        const cantidad = Number(
-          fila.querySelector(".cantidadReferencia").value,
-        );
-
-        const referencia = REFERENCESS.find((ref) => ref.id === idReferencia);
-
-        const precio = referencia ? Number(referencia.price) : 0;
-
-        const subtotal =
-          referencia && Number.isInteger(cantidad) && cantidad > 0
-            ? precio * cantidad
-            : 0;
-
-        fila.querySelector(".precioReferencia").value = formatoCOP(precio);
-
-        fila.querySelector(".subtotalReferencia").value = formatoCOP(subtotal);
-
-        total += subtotal;
-      });
-
-      totalPedido.textContent = formatoCOP(total);
-    }
-
-    /* =========================================
-   BOTÓN AGREGAR REFERENCIA
-   ========================================= */
 
     btnAgregarReferencia.addEventListener("click", agregarFilaReferencia);
 
-    /* =========================================
-   CONFIRMAR Y GUARDAR PEDIDO
-   ========================================= */
+    // =========================================
+    // 6. CALCULAR PRECIOS Y TOTAL
+    // =========================================
+
+    function formatoMoneda(valor) {
+        if (typeof formatoCOP === "function") {
+            return formatoCOP(valor);
+        }
+
+        return new Intl.NumberFormat("es-CO", {
+            style: "currency",
+            currency: "COP",
+            maximumFractionDigits: 0
+        }).format(valor);
+    }
+
+    function actualizarTotales() {
+
+        let total = 0;
+
+        const filas = contenedorReferencias.querySelectorAll(
+            ".row.g-2.align-items-end"
+        );
+
+        filas.forEach(fila => {
+
+            const selector = fila.querySelector(".selectorReferencia");
+            const campoCantidad = fila.querySelector(".cantidadReferencia");
+
+            const idReferencia = selector.value;
+            const cantidad = Number(campoCantidad.value);
+
+            const referencia = REFERENCESS.find(
+                ref => String(ref.id) === String(idReferencia)
+            );
+
+            const precio = referencia ? Number(referencia.price) : 0;
+
+            const subtotal =
+                referencia &&
+                Number.isFinite(cantidad) &&
+                Number.isInteger(cantidad) &&
+                cantidad > 0
+                    ? precio * cantidad
+                    : 0;
+
+            fila.querySelector(".precioReferencia").value =
+                formatoMoneda(precio);
+
+            fila.querySelector(".subtotalReferencia").value =
+                formatoMoneda(subtotal);
+
+            total += subtotal;
+        });
+
+        totalPedido.textContent = formatoMoneda(total);
+    }
+
+    // =========================================
+    // 7. CONFIRMAR Y GUARDAR PEDIDO
+    // =========================================
 
     btnConfirmarPedido.addEventListener("click", function () {
-      const idCliente = Number(nCliente.value);
-      const fecha = fechaPedido.value;
 
-      if (!clienteConfirmado || !idCliente || !fecha) {
-        mensajePedido.textContent = "Confirma primero el cliente y la fecha.";
-        mensajePedido.className = "text-danger px-3";
-        return;
-      }
-
-      const filas = [...contenedorReferencias.querySelectorAll(".row")];
-
-      if (filas.length === 0) {
-        mensajePedido.textContent = "Agrega al menos una referencia al pedido.";
-        mensajePedido.className = "text-danger px-3";
-        return;
-      }
-
-      const detallesNuevos = [];
-
-      for (const fila of filas) {
-        const idReferencia = Number(
-          fila.querySelector(".selectorReferencia").value,
-        );
-
-        const cantidad = Number(
-          fila.querySelector(".cantidadReferencia").value,
-        );
-
-        if (!idReferencia || !Number.isInteger(cantidad) || cantidad <= 0) {
-          mensajePedido.textContent =
-            "Selecciona una referencia y una cantidad válida en cada fila.";
-          mensajePedido.className = "text-danger px-3";
-          return;
+        if (
+            typeof T_ORDERS === "undefined" ||
+            typeof DETAILS === "undefined" ||
+            typeof REFERENCESS === "undefined" ||
+            typeof CLIENTS === "undefined"
+        ) {
+            mostrarMensaje("No se pudieron cargar los datos ficticios.");
+            return;
         }
 
-        // El modelo usa id_reference + id_order como clave compuesta.
-        // Por eso no permitimos repetir una referencia en el mismo pedido.
-        if (detallesNuevos.some((d) => d.id_reference === idReferencia)) {
-          mensajePedido.textContent =
-            "No repitas una referencia. Si necesitas más unidades, aumenta su cantidad.";
-          mensajePedido.className = "text-danger px-3";
-          return;
+        const idCliente = nCliente.value;
+        const fecha = fechaPedido.value;
+
+        if (!clienteConfirmado || !idCliente || !fecha) {
+            mostrarMensaje("Confirma primero el cliente y la fecha.");
+            return;
         }
 
-        detallesNuevos.push({
-          id_reference: idReferencia,
-          lot: cantidad,
+        const cliente = CLIENTS.find(
+            c => String(c.id) === String(idCliente) &&
+                 c.status_ctl === "AC"
+        );
+
+        if (!cliente) {
+            mostrarMensaje("El cliente seleccionado no es válido.");
+            return;
+        }
+
+        const filas = [
+            ...contenedorReferencias.querySelectorAll(
+                ".row.g-2.align-items-end"
+            )
+        ];
+
+        if (filas.length === 0) {
+            mostrarMensaje("Agrega al menos una referencia al pedido.");
+            return;
+        }
+
+        const detallesNuevos = [];
+
+        for (const fila of filas) {
+
+            const idReferencia = fila.querySelector(
+                ".selectorReferencia"
+            ).value;
+
+            const cantidad = Number(
+                fila.querySelector(".cantidadReferencia").value
+            );
+
+            const referencia = REFERENCESS.find(
+                ref => String(ref.id) === String(idReferencia) &&
+                       ref.status_ref === "AC"
+            );
+
+            if (
+                !referencia ||
+                !Number.isInteger(cantidad) ||
+                cantidad <= 0
+            ) {
+                mostrarMensaje(
+                    "Selecciona una referencia activa y una cantidad válida en cada fila."
+                );
+                return;
+            }
+
+            // Evitar referencias repetidas en el mismo pedido.
+            const yaExiste = detallesNuevos.some(
+                detalle =>
+                    String(detalle.id_reference) === String(idReferencia)
+            );
+
+            if (yaExiste) {
+                mostrarMensaje(
+                    "No repitas una referencia. Aumenta su cantidad en la fila existente."
+                );
+                return;
+            }
+
+            detallesNuevos.push({
+                id_reference: Number(idReferencia),
+                lot: cantidad
+            });
+        }
+
+        // Generar un ID único para el pedido.
+        const idsPedidos = T_ORDERS.map(pedido => Number(pedido.id))
+            .filter(Number.isFinite);
+
+        const nuevoId = idsPedidos.length > 0
+            ? Math.max(...idsPedidos) + 1
+            : 1;
+
+        // Guardar el pedido.
+        const nuevoPedido = {
+            id: nuevoId,
+            id_cliente: cliente.id,
+            id_user: 1,
+            date_ord: fecha
+        };
+
+        T_ORDERS.push(nuevoPedido);
+
+        // Guardar los detalles del pedido.
+        detallesNuevos.forEach(detalle => {
+            DETAILS.push({
+                id_reference: detalle.id_reference,
+                id_order: nuevoId,
+                lot: detalle.lot
+            });
         });
-      }
 
-      // Generar el nuevo ID a partir del pedido más alto.
-      const nuevoId = T_ORDERS.length
-        ? Math.max(...T_ORDERS.map((p) => Number(p.id))) + 1
-        : 1001;
+        console.log("Pedido agregado:", nuevoPedido);
+        console.log(
+            "Detalles del pedido:",
+            DETAILS.filter(detalle =>
+                String(detalle.id_order) === String(nuevoId)
+            )
+        );
 
-      // Guardar el pedido.
-      T_ORDERS.push({
-        id: nuevoId,
-        id_cliente: idCliente,
-        id_user: 1,
-        date_ord: fecha,
-      });
+        // Actualizar la tabla de pedidos si existe esa función.
+        if (typeof buscarPedidos === "function") {
+            buscarPedidos();
+        } else if (typeof mostrarPedidos === "function") {
+            mostrarPedidos();
+        } else {
+            console.warn(
+                "El pedido se guardó en memoria, pero no se encontró una función para actualizar la tabla."
+            );
+        }
 
-      // Guardar sus referencias y cantidades.
-      detallesNuevos.forEach((detalle) => {
-        DETAILS.push({
-          id_reference: detalle.id_reference,
-          id_order: nuevoId,
-          lot: detalle.lot,
-        });
-      });
+        // Actualizar las estadísticas si existe una función global.
+        if (typeof mostrarEstadisticas === "function") {
+            mostrarEstadisticas();
+        }
 
-      // Actualizar la tabla existente.
-      // mostrarPedidos() es la función que ya tienes en pedidos.js.
-      buscarPedidos();
+        // Limpiar y cerrar el modal.
+        formularioLimpiar();
 
-      // Cerrar el modal.
-      const modalElemento = document.getElementById("modalAddPedido");
-      const modal = bootstrap.Modal.getInstance(modalElemento);
+        const modal = bootstrap.Modal.getInstance(modalElemento);
 
-      if (modal) {
-        modal.hide();
-      }
+        if (modal) {
+            modal.hide();
+        } else if (typeof bootstrap !== "undefined") {
+            bootstrap.Modal.getOrCreateInstance(modalElemento).hide();
+        }
 
-      // Limpiar el formulario para el siguiente pedido.
-      nCliente.value = "";
-      fechaPedido.value = "";
-      contenedorReferencias.innerHTML = "";
-      seccionReferencias.hidden = true;
-      totalPedido.textContent = formatoCOP(0);
-      clienteConfirmado = false;
-      btnConfirmarPedido.disabled = true;
-
-      mensajePedido.textContent = "";
+        mostrarMensaje("Pedido agregado correctamente.", "success");
     });
 
-    /* =========================================
-   INICIALIZAR MODAL
-   ========================================= */
+    // =========================================
+    // 8. LIMPIAR EL MODAL
+    // =========================================
+
+    function formularioLimpiar() {
+
+        nCliente.value = "";
+        fechaPedido.value = "";
+
+        contenedorReferencias.innerHTML = "";
+        seccionReferencias.hidden = true;
+
+        totalPedido.textContent = formatoMoneda(0);
+
+        clienteConfirmado = false;
+        btnConfirmarPedido.disabled = true;
+    }
+
+    // =========================================
+    // 9. INICIALIZAR
+    // =========================================
+
+    btnConfirmarPedido.disabled = true;
 
     cargarClientesNuevoPedido();
-  }));
+
+    // Limpiar al cerrar el modal.
+    modalElemento.addEventListener("hidden.bs.modal", function () {
+        formularioLimpiar();
+        mensajePedido.textContent = "";
+        mensajePedido.className = "px-3";
+    });
+
+});
+
 
 /*ESTADÍSTICAS DE PEDIDOS: TABLA Y GRÁFICO*/
 
@@ -1269,5 +1428,88 @@ document.addEventListener("DOMContentLoaded", function () {
             "'": "&#39;"
         })[caracter]);
     }
+});
+
+
+/* Agregar referencias */
+document.addEventListener("DOMContentLoaded", function () {
+
+    const formulario = document.getElementById("formAddRef");
+    const modalElemento = document.getElementById("modalAddRef");
+
+    const campoNombre = document.getElementById("nombreNuevaRef");
+    const campoPrecio = document.getElementById("precioNuevaRef");
+
+    if (!formulario || !modalElemento || !campoNombre || !campoPrecio) {
+        console.error("No se encontraron los elementos del formulario de referencias.");
+        return;
+    }
+
+    formulario.addEventListener("submit", function (evento) {
+        evento.preventDefault();
+
+        if (typeof REFERENCESS === "undefined") {
+            console.error("No se encontró el arreglo REFERENCESS.");
+            alert("No se pudieron cargar los datos de referencias.");
+            return;
+        }
+
+        const nombre = campoNombre.value.trim();
+        const precio = Number(campoPrecio.value);
+
+        // Validar los datos ingresados
+        if (!nombre || !Number.isFinite(precio) || precio <= 0) {
+            alert("Ingresa un nombre y un precio válido mayor que cero.");
+            return;
+        }
+
+        // Evitar referencias duplicadas por nombre
+        const referenciaExiste = REFERENCESS.some(referencia =>
+            referencia.name_ref.trim().toLowerCase() === nombre.toLowerCase()
+        );
+
+        if (referenciaExiste) {
+            alert("Ya existe una referencia con ese nombre.");
+            return;
+        }
+
+        // Generar un ID nuevo a partir de los IDs existentes
+        const nuevoId = REFERENCESS.length > 0
+            ? Math.max(
+                ...REFERENCESS.map(referencia => Number(referencia.id) || 0)
+            ) + 1
+            : 1;
+
+        // Crear la referencia con la estructura de los datos ficticios
+        const nuevaReferencia = {
+            id: nuevoId,
+            name_ref: nombre,
+            price: precio,
+            status_ref: "AC"
+        };
+
+        // Agregar la referencia al arreglo
+        REFERENCESS.push(nuevaReferencia);
+
+        console.log("Referencia agregada:", nuevaReferencia);
+
+        // Actualizar la tabla si existe la función global
+        if (typeof mostrarReferencias === "function") {
+            mostrarReferencias(REFERENCESS);
+        }
+
+        // Limpiar el formulario
+        formulario.reset();
+
+        // Cerrar el modal
+        const modal = bootstrap.Modal.getInstance(modalElemento);
+
+        if (modal) {
+            modal.hide();
+        }
+
+        alert("Referencia agregada correctamente.");
+    });
+
 });
 
