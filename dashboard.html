@@ -12,7 +12,9 @@
 </head>
 <body>
     <!-- build:js js/main.js -->
+    <script src="./javasScript/datosFicticios.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./javasScript/dashboard.js"></script>
     <!-- endbuild -->
     <div class="container-fluid navbarStyles" >
         <div class="row">
@@ -111,70 +113,112 @@
                 </ul>
             </div>
             <div class="col">
+            
+                <!-- ================================== -->
+                <!-- INDICADORES PRINCIPALES            -->
+                <!-- ================================== -->
+            
                 <div class="row">
+            
+                    <!-- Pedidos del día -->
                     <div class="col paddingCard">
-                        <div class="card fw-semibold text-center " id="cardDashboard">
-                            <div class="card-header ">
+                        <div class="card fw-semibold text-center">
+                            <div class="card-header">
                                 Pedidos hoy
                             </div>
+            
                             <div class="card-body">
-                                <a href="./pedidos.html"><!-- Esto debe redirigir a respectiva tabla-->
-                                    <h2 class="textSecondary fw-semibold">18</h2> <!-- Estos datos se extraen de la BD -->
+                                <a href="./pedidos.html">
+                                    <h2 id="pedidosHoy" class="textSecondary fw-semibold">—</h2>
                                 </a>
                             </div>
                         </div>
                     </div>
+            
+            
+                    <!-- Ventas del mes -->
                     <div class="col paddingCard">
-                        <div class="card fw-semibold text-center " id="cardDashboard">
-                            <div class="card-header ">
+                        <div class="card fw-semibold text-center">
+                            <div class="card-header">
                                 Ventas del mes
                             </div>
+            
                             <div class="card-body">
-                                <a href="./pedidos.html"><!-- Esto debe redirigir a diagrama estadistico-->
-                                    <h2 class="textSecondary fw-semibold">$42.3M</h2> <!-- Estos datos se extraen de la BD -->
+                                <a href="./pedidos.html">
+                                    <h2 id="ventasMes" class="textSecondary fw-semibold">—</h2>
                                 </a>
                             </div>
                         </div>
                     </div>
+            
+            
+                    <!-- Clientes con deudas -->
                     <div class="col paddingCard">
-                        <div class="card fw-semibold text-center " id="cardDashboard">
-                            <div class="card-header ">
+                        <div class="card fw-semibold text-center">
+                            <div class="card-header">
                                 Clientes con deudas
                             </div>
+            
                             <div class="card-body">
-                                <a href="./cobranza.html"><!-- Esto debe redirigir a respectiva tabla-->
-                                    <h2 class="textSecondary fw-semibold text-danger">7</h2> <!-- Estos datos se extraen de la BD -->
+                                <a href="./cobranza.html">
+                                    <h2 id="clientesDeuda" class="textSecondary fw-semibold text-danger">—</h2>
                                 </a>
                             </div>
                         </div>
                     </div>
+            
+            
+                    <!-- Gastos del mes -->
                     <div class="col paddingCard">
-                        <div class="card textSecondary fw-semibold text-center " id="cardDashboard">
-                            <div class="card-header ">
+                        <div class="card textSecondary fw-semibold text-center">
+                            <div class="card-header">
                                 Gastos del mes
                             </div>
+            
                             <div class="card-body">
-                                <a href="./economia.html"><!-- Esto debe redirigir a diagrama estadistico-->
-                                    <h2 class="textSecondary fw-semibold">$11.8M</h2> <!-- Estos datos se extraen de la BD-->
+                                <a href="./economia.html">
+                                    <h2 id="gastosMes" class="textSecondary fw-semibold">—</h2>
                                 </a>
                             </div>
                         </div>
                     </div>
+            
                 </div>
-                <a href="./inventario.html"><!-- Esto debe redirigir a respectiva tabla-->
-                    <div class="alert alert-warning alert-dismissible fade show">
-                        <i class="bi bi-exclamation-triangle-fill"></i></i>
-                        <strong> 3 materias primas</strong> estan bajo del 30% de existencias<!-- Estos datos se extraen de la BD-->
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </a>
-                <a href="./cobranza.html"><!-- Esto debe redirigir a respectiva tabla-->
-                    <div class="alert alert-danger alert-dismissible fade show">
+            
+            
+                <!-- ================================== -->
+                <!-- ALERTAS DINÁMICAS                  -->
+                <!-- ================================== -->
+                
+                <!-- Alerta de inventario -->
+                <div id="alertaInventario" class="alert alert-warning alert-dismissible fade show d-none" role="alert">
+                
+                    <a href="./inventario.html" class="text-dark text-decoration-none">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <strong id="cantidadInventario"></strong>
+                        <span id="textoInventario"></span>
+                    </a>
+                
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar">
+                    </button>
+                
+                </div>
+                
+                
+                <!-- Alerta de cobranza -->
+                <div id="alertaCobranza" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
+                
+                    <a href="./cobranza.html" class="text-dark text-decoration-none">
                         <i class="bi bi-exclamation-octagon-fill"></i>
-                        <strong> 2 facturas</strong> vencidas hace mas de 5 diás<!-- Estos datos se extraen de la BD-->
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </a>
+                        <strong id="cantidadFacturas"></strong>
+                        <span id="textoFacturas"></span>
+                    </a>
+                
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar">
+                    </button>
+                
+                </div>
+            
             </div>
             
         </div>

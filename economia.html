@@ -40,62 +40,114 @@
                     data-bs-target="#modalAddReMovEc" id="btnGeneric">
                     <i class="bi bi-plus-square"></i> Registrar movimiento
                 </button>
-                <div class="modal fade" id="modalAddReMovEc" tabindex="-1" aria-labelledby="modalAddReMovEc" aria-hidden="true">
+                
+                <div class="modal fade" id="modalAddReMovEc" tabindex="-1" aria-labelledby="tituloModalReMovEc" aria-hidden="true">
+                
                     <div class="modal-dialog">
                         <div class="modal-content">
+                
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="modalAddReMovEc"> Registrar movimiento</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h1 class="modal-title fs-5" id="tituloModalReMovEc">
+                                    Registrar movimiento
+                                </h1>
+                
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
                             </div>
-                            <div class="modal-body">
-                                <!-- Todo el modal debe trabajar con la base de datos antes de agregar la referencia debe confirmar el cliente -->
-                                <form action="">
+                
+                            <form id="formNuevoMovimientoEconomico">
+                
+                                <div class="modal-body">
+                
                                     <div class="form-group">
+                
+                                        <!-- TIPO DE MOVIMIENTO -->
                                         <div class="row p-3">
                                             <div class="col text-center">
-                                                <input type="radio" class="btn-check " name="options-base" id="ReMovEntrada"
-                                                    autocomplete="off" checked>
+                
+                                                <input type="radio" class="btn-check" name="tipoMovimientoEconomico" id="ReMovEntrada"
+                                                    value="IN" autocomplete="off" checked>
+                
                                                 <label for="ReMovEntrada"
                                                     class="btn w-25 btn-outline-warning textSecondary fw-semibold">
-                                                    Entrada</label>
-                                                <input type="radio" class="btn-check textMain " name="options-base" id="ReMovSalida"
-                                                    autocomplete="off">
-                                                <label for="ReMovSalida"
-                                                    class="btn w-25 btn-outline-danger textSecondary fw-semibold">
-                                                    Salida</label>
+                                                    Entrada
+                                                </label>
+                
+                                                <input type="radio" class="btn-check" name="tipoMovimientoEconomico" id="ReMovSalida"
+                                                    value="OUT" autocomplete="off">
+                
+                                                <label for="ReMovSalida" class="btn w-25 btn-outline-danger textSecondary fw-semibold">
+                                                    Salida
+                                                </label>
+                
                                             </div>
                                         </div>
+                
+                                        <!-- CONCEPTO -->
                                         <div class="row p-3">
                                             <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Concepto</label>
-                                                <select name="" id="" class="form-select textSecondary fw-semibold">
-                                                    <option value="0"> Concept 1</option>
-                                                    <option value="1"> Concept 2</option>
+                
+                                                <label for="conceptoMovimientoEconomico" class="form-label textSecondary fw-semibold">
+                                                    Concepto
+                                                </label>
+                
+                                                <select id="conceptoMovimientoEconomico" class="form-select textSecondary fw-semibold"
+                                                    required>
+                                                    <option value="">Seleccionar concepto</option>
                                                 </select>
+                
                                             </div>
                                         </div>
+                
+                                        <!-- FECHA Y VALOR -->
                                         <div class="row p-3">
+                
                                             <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">Fecha</label>
-                                                <input type="date" class="form-control textSecondary fw-semibold" id="fecha">
+                
+                                                <label for="fechaMovimientoEconomico" class="form-label textSecondary fw-semibold">
+                                                    Fecha
+                                                </label>
+                
+                                                <input type="date" class="form-control textSecondary fw-semibold"
+                                                    id="fechaMovimientoEconomico" required>
+                
                                             </div>
+                
                                             <div class="col">
-                                                <label for="" class="form-label textSecondary fw-semibold">
-                                                    Valor</label>
-                                                <input type="number" class="form-control textSecondary fw-semibold">
+                
+                                                <label for="valorMovimientoEconomico" class="form-label textSecondary fw-semibold">
+                                                    Valor
+                                                </label>
+                
+                                                <input type="number" class="form-control textSecondary fw-semibold"
+                                                    id="valorMovimientoEconomico" min="1" step="1" required>
+                
                                             </div>
+                
                                         </div>
+                
                                     </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Guardar
-                                    movimiento</button>
-                                <button class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal">Cancelar</button>
-                            </div>
+                
+                                </div>
+                
+                                <div class="modal-footer">
+                
+                                    <button class="btn btn-success textMain fw-semibold btnGeneric" type="submit">
+                                        Guardar movimiento
+                                    </button>
+                
+                                    <button class="btn btn-outline-dark fw-semibold" type="button" data-bs-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                
+                                </div>
+                
+                            </form>
+                
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -217,166 +269,286 @@
                         </div>
                     
                     </div>
-                    <div class="tab-pane fade " id="estadisticasEc-tab-pane" role="tabpanel" aria-labelledby="estadisticasEc-tab"
+                    
+                    <div class="tab-pane fade" id="estadisticasEc-tab-pane" role="tabpanel" aria-labelledby="estadisticasEc-tab"
                         tabindex="0">
+                    
                         <div class="row">
+                    
                             <div class="col">
-                                <label for="" class="form-label textSecondary fw-semibold">Año:</label>
-                                <select name="" id="" class="form-select textSecondary fw-semibold">
-                                    <option value="0" class="textSecondary fw-semibold">2023</option>
-                                    <option value="0" class="textSecondary fw-semibold">2024</option>
-                                    <option value="1" class="textSecondary fw-semibold">2025</option>
-                                    <option value="2" class="textSecondary fw-semibold">2026</option>
-                                    <option value="3" class="textSecondary fw-semibold">2027</option>
+                                <label for="anioEstadisticasEc" class="form-label textSecondary fw-semibold">
+                                    Año:
+                                </label>
+                    
+                                <select id="anioEstadisticasEc" class="form-select textSecondary fw-semibold">
                                 </select>
                             </div>
+                    
                             <div class="col align-self-end">
-                                <button type="submit" class="btn btn-secondary textMain fw-semibold btnGeneric"><i
-                                        class="bi bi-search"></i>
-                                    Buscar</button>
+                                <button type="button" id="btnBuscarEstadisticasEc"
+                                    class="btn btn-secondary textMain fw-semibold btnGeneric">
+                                    <i class="bi bi-search"></i> Buscar
+                                </button>
+                            </div>
+                    
+                        </div>
+                    
+                        <hr>
+                    
+                        <div class="row">
+                            <div class="col table-responsive">
+                    
+                                <table class="table">
+                    
+                                    <thead>
+                                        <tr>
+                                            <th>Concepto</th>
+                                            <th>Tipo</th>
+                                            <th>Total del año</th>
+                                        </tr>
+                                    </thead>
+                    
+                                    <tbody id="tablaEstadisticasEc"></tbody>
+                    
+                                </table>
+                    
                             </div>
                         </div>
+                    
                         <hr>
-                        <div class="row">
-                            <table class="table">
-                                <!--Debe llenarse la tabla con datos de la DB-->
-                                <thead>
-                                    <tr>
-                                        <th>Concepto</th>
-                                        <th>Tipo</th>
-                                        <th>Total del año</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">Concepto 1</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">tipo 1</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">2.000.000</h6>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">Concepto 4</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">tipo 3</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">1.000.000</h6>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div id="estEco"></div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade " id="regConcepto-tab-pane" role="tabpanel" aria-labelledby="regConcepto-tab"
-                        tabindex="0">
+                    
                         <div class="row">
                             <div class="col">
-                                <button class="btn btn-secondary textMain fw-semibold" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#modalAddRef" id="btnGeneric">
+                                <div id="estEco"></div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="tab-pane fade" id="regConcepto-tab-pane" role="tabpanel" aria-labelledby="regConcepto-tab" tabindex="0">
+                    
+                        <!-- BUSCADOR Y BOTÓN AGREGAR -->
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-secondary textMain fw-semibold btnGeneric" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#modalAddConcepto">
                                     <i class="bi bi-plus-square"></i> Agregar concepto
                                 </button>
-                                <div class="modal fade" id="modalAddRef" tabindex="-1" aria-labelledby="modalAddRef" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="modalAddRef"> Nuevo concepto</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- Todo el modal debe trabajar con la base de datos -->
-                                                <form action="">
-                                                    <div class="form-group">
-                                                        <div class="row p-2">
-                                                            <div class="col w-50">
-                                                                <label for="" class="form-label textSecondary fw-semibold">Nombre</label>
-                                                                <input type="text" class="form-control">
-                                                            </div>
-                                                            <div class="col">
-                                                                <label for="" class="form-label textSecondary fw-semibold">Tipo</label>
-                                                                <select name="" id="" class="form-select textSecondary fw-semibold">
-                                                                    <option value="0" class="textSecondary fw-semibold">Tip 1</option>
-                                                                    <option value="0" class="textSecondary fw-semibold">Tip 2</option>
-                                                                    <option value="0" class="textSecondary fw-semibold">Tip 3</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col">
-                                                                <label for="" class="form-label textSecondary fw-semibold">Valor</label>
-                                                                <input type="number" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row p-2">
-                                                            <div class="col">
-                                                                <div class="form-floating">
-                                                                    <textarea class="form-control textSecondary fw-semibold" placeholder="Leave a comment here" id="desConcepto"></textarea>
-                                                                    <label for="desConcepto" class="textSecondary fw-semibold">Descripcion concepto</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                            </div>
+                    
+                            <div class="col-lg-10">
+                                <input type="search" id="buscarConcepto" class="form-control textSecondary fw-semibold"
+                                    placeholder="Buscar concepto">
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- TABLA DE CONCEPTOS -->
+                        <div class="row p-2">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nombre del concepto</th>
+                                            <th scope="col">Valor</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col">
+                                                <i class="bi bi-gear"></i>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                    
+                                    <tbody id="tablaConceptos">
+                                        <!-- Datos generados desde JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    
+                        <!-- ================================================= -->
+                        <!-- MODAL AGREGAR CONCEPTO -->
+                        <!-- ================================================= -->
+                    
+                        <div class="modal fade" id="modalAddConcepto" tabindex="-1" aria-labelledby="tituloAddConcepto" aria-hidden="true">
+                    
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                    
+                                    <form id="formAddConcepto">
+                    
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="tituloAddConcepto">
+                                                Nuevo concepto
+                                            </h1>
+                    
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                    
+                                        <div class="modal-body">
+                    
+                                            <div class="row p-2">
+                    
+                                                <div class="col-12 mb-3">
+                                                    <label for="nombreNuevoConcepto" class="form-label textSecondary fw-semibold">
+                                                        Nombre
+                                                    </label>
+                    
+                                                    <input type="text" id="nombreNuevoConcepto" class="form-control" required>
+                                                </div>
+                    
+                                                <div class="col-6 mb-3">
+                                                    <label for="tipoNuevoConcepto" class="form-label textSecondary fw-semibold">
+                                                        Tipo
+                                                    </label>
+                    
+                                                    <select id="tipoNuevoConcepto" class="form-select textSecondary fw-semibold" required>
+                                                        <option value="">Seleccionar</option>
+                                                        <option value="IN">Ingreso</option>
+                                                        <option value="OUT">Egreso</option>
+                                                    </select>
+                                                </div>
+                    
+                                                <div class="col-6 mb-3">
+                                                    <label for="valorNuevoConcepto" class="form-label textSecondary fw-semibold">
+                                                        Valor
+                                                    </label>
+                    
+                                                    <input type="number" id="valorNuevoConcepto" class="form-control" min="0" step="1"
+                                                        required>
+                                                </div>
+                    
+                                                <div class="col-12">
+                                                    <div class="form-floating">
+                                                        <textarea class="form-control textSecondary fw-semibold" placeholder="Descripción"
+                                                            id="descripcionNuevoConcepto" style="height: 100px"></textarea>
+                    
+                                                        <label for="descripcionNuevoConcepto" class="textSecondary fw-semibold">
+                                                            Descripción concepto
+                                                        </label>
                                                     </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-success textMain fw-semibold btnGeneric" type="submit">Guardar
-                                                    concepto</button>
-                                                <button class="btn btn-outline-dark fw-semibold"
-                                                    data-bs-dismiss="modal">Cancelar</button>
+                                                </div>
+                    
                                             </div>
                                         </div>
-                                    </div>
+                    
+                                        <div class="modal-footer">
+                    
+                                            <button class="btn btn-success textMain fw-semibold" type="submit">
+                                                Guardar concepto
+                                            </button>
+                    
+                                            <button class="btn btn-outline-dark fw-semibold" type="button" data-bs-dismiss="modal">
+                                                Cancelar
+                                            </button>
+                    
+                                        </div>
+                    
+                                    </form>
+                    
                                 </div>
                             </div>
-                            <div class="col-lg-10">
-                                <input type="search" class="form-control textSecondary fw-semibold" placeholder="Buscar concepto">
+                        </div>
+                    
+                    
+                        <!-- ================================================= -->
+                        <!-- MODAL ACTUALIZAR CONCEPTO -->
+                        <!-- ================================================= -->
+                    
+                        <div class="modal fade" id="modalEditConcepto" tabindex="-1" aria-labelledby="tituloEditConcepto"
+                            aria-hidden="true">
+                    
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                    
+                                    <form id="formEditConcepto">
+                    
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="tituloEditConcepto">
+                                                Actualizar concepto
+                                            </h1>
+                    
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                    
+                                        <div class="modal-body">
+                    
+                                            <input type="hidden" id="idEditConcepto">
+                    
+                                            <div class="row p-2">
+                    
+                                                <div class="col-12 mb-3">
+                                                    <label for="nombreEditConcepto" class="form-label textSecondary fw-semibold">
+                                                        Nombre
+                                                    </label>
+                    
+                                                    <input type="text" id="nombreEditConcepto" class="form-control" required>
+                                                </div>
+                    
+                                                <div class="col-6 mb-3">
+                                                    <label for="tipoEditConcepto" class="form-label textSecondary fw-semibold">
+                                                        Tipo
+                                                    </label>
+                    
+                                                    <select id="tipoEditConcepto" class="form-select textSecondary fw-semibold" required>
+                                                        <option value="IN">Ingreso</option>
+                                                        <option value="OUT">Egreso</option>
+                                                    </select>
+                                                </div>
+                    
+                                                <div class="col-6 mb-3">
+                                                    <label for="valorEditConcepto" class="form-label textSecondary fw-semibold">
+                                                        Valor
+                                                    </label>
+                    
+                                                    <input type="number" id="valorEditConcepto" class="form-control" min="0" step="1"
+                                                        required>
+                                                </div>
+                    
+                                                <div class="col-12 mb-3">
+                                                    <label for="estadoEditConcepto" class="form-label textSecondary fw-semibold">
+                                                        Estado
+                                                    </label>
+                    
+                                                    <select id="estadoEditConcepto" class="form-select textSecondary fw-semibold">
+                                                        <option value="AC">Activo</option>
+                                                        <option value="IN">Inactivo</option>
+                                                    </select>
+                                                </div>
+                    
+                                                <div class="col-12">
+                                                    <div class="form-floating">
+                                                        <textarea class="form-control textSecondary fw-semibold" placeholder="Descripción"
+                                                            id="descripcionEditConcepto" style="height: 100px"></textarea>
+                    
+                                                        <label for="descripcionEditConcepto" class="textSecondary fw-semibold">
+                                                            Descripción concepto
+                                                        </label>
+                                                    </div>
+                                                </div>
+                    
+                                            </div>
+                                        </div>
+                    
+                                        <div class="modal-footer">
+                    
+                                            <button class="btn btn-success textMain fw-semibold" type="submit">
+                                                Actualizar concepto
+                                            </button>
+                    
+                                            <button class="btn btn-outline-dark fw-semibold" type="button" data-bs-dismiss="modal">
+                                                Cancelar
+                                            </button>
+                    
+                                        </div>
+                    
+                                    </form>
+                    
+                                </div>
                             </div>
                         </div>
-                        <div class="row p-2">
-                            <table class="table"><!-- Deben extraerse datos para llenar esta tabla-->
-                                <thead>
-                                    <tr>
-                                        <th scope="col"> Nombre del concepto</th>
-                                        <th scope="col"> Valor</th>
-                                        <th scope="col"> Tipo</th>
-                                        <th scope="col"> Estado</th>
-                                        <th scope="col"><i class="bi bi-gear"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">Concepto 1</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">5000</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">Tip 1</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">Activo</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">
-                                                <a href=""><i class="bi bi-pencil-square"></i></a>
-                                                <a href=""><i class="bi bi-trash"></i></a>
-                                            </h6>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    
                     </div>
+
                 </div>
             </div>
         </div>
