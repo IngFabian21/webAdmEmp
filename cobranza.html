@@ -14,9 +14,13 @@
 
 <body>
     <!-- build:js js/main.js -->
+    <script src="./javasScript/datosFicticios.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
     <script src="./javasScript/clientes.js"></script>
+    <script src="./javasScript/cobranza.js"></script>
     <!-- los datos de este script deben llenarse con los datos de la base de datos segun el año sel-->
     <!-- endbuild -->
     <div class="container-fluid navbarStyles">
@@ -86,300 +90,288 @@
                     </li>
                 </ul>
                 <div class="tab-content p-4 border border-top-0 rounded-bottom " id="tabCobranzaContent">
-                    <div class="tab-pane fade show active" id="deudasAbonos-tab-pane" role="tabpanel"
-                        aria-labelledby="deudasAbonos-tab" tabindex="0">
-                        <div class="row">
-                            <div class="col">
-                                <select name="" id="" class="form-select">
-                                    <option value="0" class="textSecondary fw-semibold">Todos</option>
-                                    <option value="0" class="text-success fw-semibold">Pagado</option>
-                                    <option value="0" class="text-danger fw-semibold">Deuda</option>
-                                    <option value="0" class="text-warning fw-semibold">Abono</option>
-                                </select>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                           <div class="col">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Cliente</th>
-                                        <th>Ventas</th>
-                                        <th>Abonado</th>
-                                        <th>Saldo</th>
-                                        <th>Estado</th>
-                                        <th>Agregar abono</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><h6 class="textSecondary fw-semibold">Cliente 1</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">1.200.000</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">1.200.000</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">0</h6></td>
-                                        <td><h6 class="text-success fw-semibold">Pagado</h6></td>
-                                        <td><a href="" data-bs-toggle="modal" data-bs-target="#modalAbonaridCliente"><i class="bi bi-receipt"></i></a></td>
-                                    </tr>
-                                    <div class="modal fade" id="modalAbonaridCliente" tabindex="-1" aria-labelledby="modalAbonaridCliente" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="modalAbonaridCliente"> Registrar abono</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <h6 class="textSecondary fw-semibold">Cliente 1</h6>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col">
-                                                             <h6 class="textSecondary fw-semibold">Venta:380.000</h6>
-                                                        </div>
-                                                        <div class="col">
-                                                             <h6 class="textSecondary fw-semibold">Abonado:150.000</h6>
-                                                        </div>
-                                                        <div class="col">
-                                                             <h6 class="text-danger fw-semibold">Saldo:230.000</h6>
-                                                        </div>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <label for="" class="form-label textSecondary fw-semibold">Fecha</label>
-                                                            <input type="date" name="" id="" class="form-control">
-                                                        </div>
-                                                        <div class="col">
-                                                            <label for="" class="form-label textSecondary fw-semibold">Valor del abono</label>
-                                                            <input type="number" class="form-control textSecondary fw-semibold">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button class="btn btn-success textMain fw-semibold btnGeneric" type="button">Guardar abono</button>
-                                                    <button class="btn btn-outline-dark fw-semibold" data-bs-dismiss="modal">Cancelar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <tr>
-                                        <td><h6 class="textSecondary fw-semibold">Cliente 2</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">380.000</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">150.000</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">230.000</h6></td>
-                                        <td><h6 class="text-warning fw-semibold">Abono parcial</h6></td>
-                                        <td><a href=""><i class="bi bi-receipt"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h6 class="textSecondary fw-semibold">Cliente 3</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">920.000</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">0</h6></td>
-                                        <td><h6 class="textSecondary fw-semibold">920.000</h6></td>
-                                        <td><h6 class="text-danger fw-semibold">Debe</h6></td>
-                                        <td><a href=""><i class="bi bi-receipt"></i></a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                           </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade " id="facturas-tab-pane" role="tabpanel" aria-labelledby="facturas-tab" tabindex="0">
-                        <div class="row">
-                            <div class="col">
-                                <label for="" class="form-label textSecondary fw-semibold">Fecha:</label>
-                                <input type="date" name="" id="" class="form-control textSecondary fw-semibold">
-                            </div>
-                            <div class="col">
-                                <label for="" class="form-label textSecondary fw-semibold">Cliente:</label>
-                                <select name="" id="" class="form-select textSecondary fw-semibold">
-                                    <option value="0" class="textSecondary fw-semibold">Todos los clientes</option>
-                                    <option value="0" class="textSecondary fw-semibold">Cliente 1</option>
-                                    <option value="1" class="textSecondary fw-semibold">Cliente 2</option>
-                                    <option value="2" class="textSecondary fw-semibold">Cliente 3</option>
-                                    <option value="3" class="textSecondary fw-semibold">Cliente 4</option>
-                                </select>
-                            </div>
-                            <div class="col align-self-end">
-                                <button type="submit" class="btn btn-secondary textMain fw-semibold btnGeneric"><i class="bi bi-search"></i>
-                                    Buscar</button>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <table class="table">
-                                <!--Debe llenarse la tabla con datos de la DB-->
-                                <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Cliente</th>
-                                        <th>Valor total</th>
-                                        <th>Factura</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">01-09-2026</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">Cliente 1</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">250.000</h6>
-                                        </td>
-                                        <td><a href="" data-bs-toggle="modal" data-bs-target="#modalFacturaId"><i class="bi bi-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">11-09-2026</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">Cliente 4</h6>
-                                        </td>
-                                        <td>
-                                            <h6 class="textSecondary fw-semibold">50.000</h6>
-                                        </td>
-                                        <td><a href="" data-bs-toggle="modal" data-bs-target="#modalFacturaId0"><i class="bi bi-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="tab-pane fade show active" id="deudasAbonos-tab-pane" role="tabpanel" aria-labelledby="deudasAbonos-tab"
+                        tabindex="0">
                     
-                            <div class="modal fade" id="modalFacturaId" tabindex="-1" aria-labelledby="modalFacturaId" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-scrollable">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="modalFacturaId">Factura #</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-sm-7">
-                                                    <h5 class="textSecondary fw-semibold text-start">La fabrica de la empanada</h5>
-                                                    <h6 class="textSecondary fw-semibold text-start">NIT#</h6>
-                                                </div>
-                                                <div class="col">
-                                                    <h5 class="textSecondary fw-semibold text-end">Factura #</h5>
-                                                    <h6 class="textSecondary fw-semibold text-end">01-09-2026</h6>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-7">
-                                                    <h5 class="textSecondary fw-semibold text-start">Cliente</h5>
-                                                    <h6 class="textSecondary fw-semibold text-start">Calle #123</h6>
-                                                </div>
-                                            </div>
-                                            <div class="row table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Referencia</th>
-                                                            <th>Cantidad</th>
-                                                            <th>Valor</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="textSecondary fw-semibold">Referencia 1</td>
-                                                            <td class="textSecondary fw-semibold">6</td>
-                                                            <td class="textSecondary fw-semibold">15.000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="textSecondary fw-semibold">Referencia 3</td>
-                                                            <td class="textSecondary fw-semibold">4</td>
-                                                            <td class="textSecondary fw-semibold">10.000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="textSecondary fw-semibold">Referencia 5</td>
-                                                            <td class="textSecondary fw-semibold">2</td>
-                                                            <td class="textSecondary fw-semibold">20.000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="textSecondary fw-semibold">Valor total</td>
-                                                            <td class="textSecondary fw-semibold"></td>
-                                                            <td class="textSecondary fw-semibold">45.000</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-success textMain fw-semibold btnGeneric" type="button"><i class="bi bi-file-earmark-arrow-down-fill"></i>Descargar</button>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col">
+                                <select id="filtroEstadoCobro" class="form-select">
+                                    <option value="TODOS" class="textSecondary fw-semibold">Todos</option>
+                                    <option value="PA" class="text-success fw-semibold">Pagado</option>
+                                    <option value="AB" class="text-warning fw-semibold">Abono parcial</option>
+                                    <option value="PE" class="text-danger fw-semibold">Debe</option>
+                                </select>
                             </div>
-                            <div class="modal fade" id="modalFacturaId0" tabindex="-1" aria-labelledby="modalFacturaId0" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-scrollable">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="modalFacturaId0">Factura #</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-sm-7">
-                                                    <h5 class="textSecondary fw-semibold text-start">La fabrica de la empanada</h5>
-                                                    <h6 class="textSecondary fw-semibold text-start">NIT#</h6>
-                                                </div>
-                                                <div class="col">
-                                                    <h5 class="textSecondary fw-semibold text-end">Factura #</h5>
-                                                    <h6 class="textSecondary fw-semibold text-end">11-09-2026</h6>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-7">
-                                                    <h5 class="textSecondary fw-semibold text-start">Cliente 4</h5>
-                                                    <h6 class="textSecondary fw-semibold text-start">Calle #123</h6>
-                                                </div>
-                                            </div>
-                                            <div class="row table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Referencia</th>
-                                                            <th>Cantidad</th>
-                                                            <th>Valor</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="textSecondary fw-semibold">Referencia 1</td>
-                                                            <td class="textSecondary fw-semibold">2</td>
-                                                            <td class="textSecondary fw-semibold">15.000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="textSecondary fw-semibold">Referencia 3</td>
-                                                            <td class="textSecondary fw-semibold">3</td>
-                                                            <td class="textSecondary fw-semibold">10.000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="textSecondary fw-semibold">Referencia 5</td>
-                                                            <td class="textSecondary fw-semibold">8</td>
-                                                            <td class="textSecondary fw-semibold">20.000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="textSecondary fw-semibold">Valor total</td>
-                                                            <td class="textSecondary fw-semibold"></td>
-                                                            <td class="textSecondary fw-semibold">45.000</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-success textMain fw-semibold btnGeneric" type="button"><i class="bi bi-file-earmark-arrow-down-fill"></i>Descargar</button>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                    
+                        <hr>
+                    
+                        <div class="row">
+                            <div class="col">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Ventas</th>
+                                            <th>Abonado</th>
+                                            <th>Saldo</th>
+                                            <th>Estado</th>
+                                            <th>Agregar abono</th>
+                                        </tr>
+                                    </thead>
+                    
+                                    <tbody id="tablaDeudasAbonos"></tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="modalAbonarCliente" tabindex="-1" aria-labelledby="tituloModalAbono" aria-hidden="true">
+                    
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                    
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="tituloModalAbono">
+                                        Registrar abono
+                                    </h1>
+                    
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                    
+                                <form id="formRegistrarAbono">
+                    
+                                    <div class="modal-body">
+                    
+                                        <input type="hidden" id="idClienteAbono">
+                    
+                                        <div class="row">
+                                            <div class="col">
+                                                <h6 class="textSecondary fw-semibold" id="nombreClienteAbono"></h6>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="row">
+                                            <div class="col">
+                                                <h6 class="textSecondary fw-semibold">
+                                                    Venta:
+                                                    <span id="ventaClienteAbono"></span>
+                                                </h6>
+                                            </div>
+                    
+                                            <div class="col">
+                                                <h6 class="textSecondary fw-semibold">
+                                                    Abonado:
+                                                    <span id="abonadoClienteAbono"></span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="row">
+                                            <div class="col">
+                                                <h6 class="text-danger fw-semibold">
+                                                    Saldo:
+                                                    <span id="saldoClienteAbono"></span>
+                                                </h6>
+                                            </div>
+                                        </div>
+                    
+                                        <hr>
+                    
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="fechaAbono" class="form-label textSecondary fw-semibold">
+                                                    Fecha
+                                                </label>
+                    
+                                                <input type="date" id="fechaAbono" class="form-control" required>
+                                            </div>
+                    
+                                            <div class="col">
+                                                <label for="valorNuevoAbono" class="form-label textSecondary fw-semibold">
+                                                    Valor del abono
+                                                </label>
+                    
+                                                <input type="number" id="valorNuevoAbono" class="form-control" min="1" step="1" required>
+                                            </div>
+                                        </div>
+                    
+                                    </div>
+                    
+                                    <div class="modal-footer">
+                                        <button class="btn btn-success textMain fw-semibold btnGeneric" type="submit">
+                                            Guardar abono
+                                        </button>
+                    
+                                        <button class="btn btn-outline-dark fw-semibold" type="button" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                    </div>
+                    
+                                </form>
+                    
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="facturas-tab-pane" role="tabpanel" aria-labelledby="facturas-tab" tabindex="0">
+                    
+                        <!-- FILTROS -->
+                        <div class="row">
+                    
+                            <div class="col">
+                                <label for="filtroFechaFactura" class="form-label textSecondary fw-semibold">
+                                    Fecha:
+                                </label>
+                    
+                                <input type="date" id="filtroFechaFactura" class="form-control textSecondary fw-semibold">
+                            </div>
+                    
+                            <div class="col">
+                                <label for="filtroClienteFactura" class="form-label textSecondary fw-semibold">
+                                    Cliente:
+                                </label>
+                    
+                                <select id="filtroClienteFactura" class="form-select textSecondary fw-semibold">
+                                    <option value="">Todos los clientes</option>
+                                </select>
+                            </div>
+                    
+                            <div class="col align-self-end">
+                                <button type="button" id="btnBuscarFacturas" class="btn btn-secondary textMain fw-semibold btnGeneric">
+                                    <i class="bi bi-search"></i> Buscar
+                                </button>
+                            </div>
+                    
+                        </div>
+                    
+                        <hr>
+                    
+                        <!-- TABLA DE FACTURAS -->
+                        <div class="row">
+                            <div class="col table-responsive">
+                    
+                                <table class="table">
+                    
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Cliente</th>
+                                            <th>Valor total</th>
+                                            <th>Factura</th>
+                                        </tr>
+                                    </thead>
+                    
+                                    <tbody id="tablaFacturas"></tbody>
+                    
+                                </table>
+                    
+                            </div>
+                        </div>
+                    
+                    </div>
+                    
+                    
+                    <!-- MODAL DINÁMICO DE FACTURA -->
+                    <div class="modal fade" id="modalFactura" tabindex="-1" aria-labelledby="tituloModalFactura" aria-hidden="true">
+                    
+                        <div class="modal-dialog modal-dialog-scrollable">
+                    
+                            <div class="modal-content">
+                    
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="tituloModalFactura">
+                                        Factura #
+                                    </h1>
+                    
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                    
+                                <div class="modal-body" id="contenidoFactura">
+                    
+                                    <!-- ENCABEZADO -->
+                                    <div class="row">
+                    
+                                        <div class="col-sm-7">
+                                            <h5 class="textSecondary fw-semibold text-start">
+                                                La fabrica de la empanada
+                                            </h5>
+                    
+                                            <h6 class="textSecondary fw-semibold text-start">
+                                                NIT#
+                                            </h6>
+                                        </div>
+                    
+                                        <div class="col">
+                                            <h5 class="textSecondary fw-semibold text-end">
+                                                Factura #<span id="numeroFactura"></span>
+                                            </h5>
+                    
+                                            <h6 class="textSecondary fw-semibold text-end" id="fechaFactura"></h6>
+                                        </div>
+                    
+                                    </div>
+                    
+                                    <hr>
+                    
+                                    <!-- INFORMACIÓN DEL CLIENTE -->
+                                    <div class="row">
+                    
+                                        <div class="col-sm-7">
+                                            <h5 class="textSecondary fw-semibold text-start" id="nombreClienteFactura"></h5>
+                    
+                                            <h6 class="textSecondary fw-semibold text-start" id="direccionClienteFactura"></h6>
+                                        </div>
+                    
+                                    </div>
+                    
+                                    <!-- DETALLES -->
+                                    <div class="row table-responsive">
+                    
+                                        <table class="table">
+                    
+                                            <thead>
+                                                <tr>
+                                                    <th>Referencia</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Valor</th>
+                                                </tr>
+                                            </thead>
+                    
+                                            <tbody id="detalleFactura"></tbody>
+                    
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="2">Valor total</th>
+                    
+                                                    <th id="totalFactura"></th>
+                                                </tr>
+                                            </tfoot>
+                    
+                                        </table>
+                    
+                                    </div>
+                    
+                                </div>
+                    
+                                <div class="modal-footer">
+                    
+                                    <button type="button" id="btnDescargarFactura" class="btn btn-success textMain fw-semibold btnGeneric">
+                    
+                                        <i class="bi bi-file-earmark-arrow-down-fill"></i>
+                                        Descargar
+                    
+                                    </button>
+                    
+                                </div>
+                    
+                            </div>
+                    
+                        </div>
+                    
+                    </div>
+
                 </div>
             </div>
         </div>

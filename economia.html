@@ -14,6 +14,7 @@
 
 <body>
     <!-- build:js js/main.js -->
+    <script src="./javasScript/datosFicticios.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/apexcharts/dist/apexcharts.min.js"></script>
     <script src="./javasScript/economia.js"></script>
@@ -153,34 +154,52 @@
                     </li>
                 </ul>
                 <div class="tab-content p-4 border border-top-0 rounded-bottom " id="tabEconomiaContent">
-                    <div class="tab-pane fade show active" id="movimientosEc-tab-pane" role="tabpanel"
-                        aria-labelledby="movimientosEc-tab" tabindex="0">
+                    <div class="tab-pane fade show active" id="movimientosEc-tab-pane" role="tabpanel" aria-labelledby="movimientosEc-tab"
+                        tabindex="0">
+                    
                         <div class="row">
+                    
                             <div class="col paddingCard">
-                                <div class="card fw-semibold text-center " id="cardDashboard">
-                                    <div class="card-header ">
+                                <div class="card fw-semibold text-center" id="cardDashboard">
+                    
+                                    <div class="card-header">
                                         Ingresos del mes
                                     </div>
+                    
                                     <div class="card-body">
-                                        <h2 class="textSecondary fw-semibold">$18.2M</h2> <!-- Estos datos se extraen de la BD -->
+                                        <h2 class="textSecondary fw-semibold" id="totalIngresosMes">
+                                            $0
+                                        </h2>
                                     </div>
+                    
                                 </div>
                             </div>
+                    
                             <div class="col paddingCard">
-                                <div class="card fw-semibold text-center " id="cardDashboard">
-                                    <div class="card-header ">
+                                <div class="card fw-semibold text-center" id="cardDashboard">
+                    
+                                    <div class="card-header">
                                         Gastos del mes
                                     </div>
+                    
                                     <div class="card-body">
-                                        <h2 class="textSecondary fw-semibold">$42.3M</h2> <!-- Estos datos se extraen de la BD -->
+                                        <h2 class="textSecondary fw-semibold" id="totalGastosMes">
+                                            $0
+                                        </h2>
                                     </div>
+                    
                                 </div>
                             </div>
+                    
                         </div>
+                    
                         <hr>
+                    
                         <div class="row">
-                            <div class="col">
+                            <div class="col table-responsive">
+                    
                                 <table class="table">
+                    
                                     <thead>
                                         <tr>
                                             <th>Fecha</th>
@@ -189,53 +208,14 @@
                                             <th>Valor</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">16-09-2026</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Concepto 1</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="text-success fw-semibold">Entrada</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">$2.000.000</h6>
-                                            </td>
-                                        </tr>  
-                                        <tr>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">10-09-2026</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Concepto 4</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="text-danger fw-semibold">Salida</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">$1.000.000</h6>
-                                            </td>
-                                        </tr>   
-                                        <tr>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">09-09-2026</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">Concepto 8</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="text-danger fw-semibold">Salida</h6>
-                                            </td>
-                                            <td>
-                                                <h6 class="textSecondary fw-semibold">$500.000</h6>
-                                            </td>
-                                        </tr>          
-                                    </tbody>
+                    
+                                    <tbody id="tablaMovimientosEconomia"></tbody>
+                    
                                 </table>
+                    
                             </div>
                         </div>
+                    
                     </div>
                     <div class="tab-pane fade " id="estadisticasEc-tab-pane" role="tabpanel" aria-labelledby="estadisticasEc-tab"
                         tabindex="0">

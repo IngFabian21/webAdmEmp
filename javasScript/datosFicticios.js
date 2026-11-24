@@ -165,7 +165,8 @@ const COLLECTIONS = [
         collection_value: 980000
     }
 ];
-
+// Historial de abonos realizados
+const COLLECTION_PAYMENTS = [];
 
 /* ============================================================
    T_ORDERS
